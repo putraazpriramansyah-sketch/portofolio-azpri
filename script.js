@@ -242,3 +242,50 @@ if (sealEffect) {
     });
 
 }
+
+
+/* ===== DRAG PORTFOLIO DENGAN KURSOR ===== */
+
+const portfolioTrack = document.querySelector(".portfolio-grid");
+
+if (portfolioTrack) {
+    let isDragging = false;
+    let startX = 0;
+    let scrollStart = 0;
+    let moved = false;
+
+    portfolioTrack.addEventListener("mousedown", (e) => {
+        if (e.button !== 0) return;
+
+        isDragging = true;
+        moved = false;
+        startX = e.pageX;
+        scrollStart = portfolioTrack.scrollLeft;
+    });
+
+    window.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+
+        const distance = e.pageX - startX;
+
+        if (Math.abs(distance) > 4) {
+            moved = true;
+        }
+
+        if (moved) {
+            portfolioTrack.scrollLeft = scrollStart - distance;
+        }
+    });
+
+    window.addEventListener("mouseup", () => {
+        isDragging = false;
+    });
+
+    portfolioTrack.addEventListener("click", (e) => {
+        if (moved) {
+            e.preventDefault();
+            e.stopPropagation();
+            moved = false;
+        }
+    }, true);
+}

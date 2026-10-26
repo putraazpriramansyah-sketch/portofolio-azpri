@@ -1301,10 +1301,34 @@ body::before {
     border-color: #b49aff55;
 }
 
-/* ===== ACHIEVEMENT PORTFOLIO ===== */
+
+/* ===== ACHIEVEMENT PORTFOLIO HORIZONTAL ===== */
+
+.portfolio-grid {
+    display: flex;
+    gap: 22px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 5px 2px 15px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    cursor: grab;
+}
+
+.portfolio-grid::-webkit-scrollbar {
+    display: none;
+}
+
+.portfolio-grid:active {
+    cursor: grabbing;
+}
 
 .achievement-card {
+    flex: 0 0 calc(50% - 11px);
+    min-width: 0;
     padding: 0;
+    scroll-snap-align: start;
+    user-select: none;
 }
 
 .achievement-image {
@@ -1320,6 +1344,8 @@ body::before {
     height: 100%;
     object-fit: cover;
     transition: transform .5s ease;
+    -webkit-user-drag: none;
+    pointer-events: none;
 }
 
 .achievement-card:hover .achievement-image img {
@@ -1350,6 +1376,21 @@ body::before {
 .achievement-info .portfolio-tag {
     margin-top: 18px;
 }
+
+@media (max-width: 768px) {
+    .achievement-card {
+        flex-basis: 85%;
+    }
+
+    .achievement-image {
+        height: 220px;
+    }
+
+    .achievement-info {
+        padding: 22px;
+    }
+}
+
 
 /* ===== RESPONSIVE GALLERY ===== */
 
