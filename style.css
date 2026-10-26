@@ -2072,3 +2072,40 @@ h6 {
     }
 
 }
+
+
+/* INSTAGRAM */
+.social-icons a.ig:hover {
+    background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5) !important;
+    color: #ffffff !important;
+    border-color: #d62976 !important;
+    box-shadow: 0 0 20px #d62976 !important;
+}
+
+
+/* TIKTOK */
+.social-icons a.tt:hover {
+    background: #000 !important;
+    color: #ffffff !important;
+    border-color: #00F2EA !important;
+    box-shadow:
+        -2px 0 8px #00F2EA,
+        2px 0 8px #FF0050 !important;
+}
+
+/* WHATSAPP */
+.social-icons a.wa:hover {
+    background: #25D366 !important;
+    color: #ffffff !important;
+    border-color: #000000 !important;
+    box-shadow: 0 0 20px #25D366 !important;
+}
+
+
+
+/* PASTIKAN IKON MENGIKUTI WARNA LINK */
+.social-icons a.ig:hover i,
+.social-icons a.tt:hover i,
+.social-icons a.wa:hover i {
+    color: inherit !important;
+}
