@@ -2428,3 +2428,40 @@ h6 {
     color: #b56cff;
     transform: scale(1.1);
 }
+
+
+
+/* ===== PURPLE CURSOR PARTICLE TRAIL ===== */
+.cursor-particle {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #b56cff;
+    box-shadow:
+        0 0 6px #b56cff,
+        0 0 14px #8a2be2;
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    animation: particleFade 650ms ease-out forwards;
+}
+
+@keyframes particleFade {
+    0% {
+        opacity: 0.95;
+        scale: 1;
+    }
+    100% {
+        opacity: 0;
+        scale: 0.1;
+    }
+}
+
+@media (hover: none), (prefers-reduced-motion: reduce) {
+    .cursor-particle {
+        display: none;
+    }
+}

@@ -292,7 +292,8 @@ if (portfolioTrack) {
 
 
 
-/* ===== GLOBAL IMAGE LIGHTBOX ===== */
+
+/* ===== PORTFOLIO & ACHIEVEMENT LIGHTBOX ===== */
 document.addEventListener("DOMContentLoaded", () => {
     const lightbox = document.createElement("div");
     lightbox.className = "image-lightbox";
@@ -322,7 +323,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.addEventListener("click", (event) => {
         const photo = event.target.closest(
-            ".hobby-image img, .achievement-image img, .gallery-photo img, .astro-card img, .img-box img, .about-img img"
+            ".portfolio-grid img, .achievement-image img, .portfolio-grid img, .astro-card img"
         );
 
         if (!photo || lightbox.contains(event.target)) return;
@@ -340,6 +341,28 @@ document.addEventListener("DOMContentLoaded", () => {
         if (event.key === "Escape") closePhoto();
     });
 });
+
+
+/* ===== PURPLE CURSOR PARTICLE TRAIL ===== */
+document.addEventListener("mousemove", (event) => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        return;
+    }
+
+    const particle = document.createElement("span");
+    particle.className = "cursor-particle";
+
+    particle.style.left = `${event.clientX}px`;
+    particle.style.top = `${event.clientY}px`;
+
+    document.body.appendChild(particle);
+
+    setTimeout(() => {
+        particle.remove();
+    }, 650);
+});
+
+
 
 
 
