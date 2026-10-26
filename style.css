@@ -1305,14 +1305,10 @@ body::before {
 /* ===== ACHIEVEMENT PORTFOLIO HORIZONTAL ===== */
 
 .portfolio-grid {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 22px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding: 5px 2px 15px;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    cursor: grab;
+    overflow: visible;
 }
 
 .portfolio-grid::-webkit-scrollbar {
@@ -1389,6 +1385,11 @@ body::before {
     .achievement-info {
         padding: 22px;
     }
+}
+
+/* Atur posisi foto Achievement 3 */
+.achievement-card:nth-child(3) .achievement-image img {
+    object-position: center 80%;
 }
 
 
@@ -2149,4 +2150,281 @@ h6 {
 .social-icons a.tt:hover i,
 .social-icons a.wa:hover i {
     color: inherit !important;
+}
+
+@media (max-width: 900px) {
+    .portfolio-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* PORTFOLIO - KEMBALI KE DESAIN AWAL */
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
+    overflow: visible;
+}
+
+.achievement-card {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.achievement-image {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    min-height: unset;
+    overflow: hidden;
+}
+
+.achievement-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.achievement-info {
+    padding: 27px;
+}
+
+@media (max-width: 600px) {
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* OTOMATIS TENGAH JIKA JUMLAH PRESTASI GANJIL */
+
+.portfolio-grid > .achievement-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc(50% - 14px);
+}
+
+@media (max-width: 600px) {
+    .portfolio-grid > .achievement-card:last-child:nth-child(odd) {
+        grid-column: auto;
+        width: 100%;
+    }
+}
+
+/* ===== POSISI KHUSUS FOTO ACHIEVEMENT 03 ===== */
+.classmeet-photo {
+    object-position: center 35%;
+    cursor: zoom-in;
+    pointer-events: auto;
+}
+
+/* ===== LIGHTBOX FOTO ACHIEVEMENT ===== */
+.image-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.92);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.image-lightbox.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.image-lightbox img {
+    display: block;
+    max-width: 92vw;
+    max-height: 88vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 0 35px rgba(0, 255, 213, 0.15);
+    transform: scale(0.85);
+    transition: transform 0.35s ease;
+}
+
+.image-lightbox.active img {
+    transform: scale(1);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 28px;
+    color: white;
+    background: transparent;
+    border: none;
+    font-size: 38px;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.lightbox-close:hover {
+    color: #00ffd5;
+    transform: scale(1.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .image-lightbox,
+    .image-lightbox img {
+        transition: none;
+    }
+}
+
+
+/* ===== GLOBAL IMAGE LIGHTBOX: PURPLE THEME ===== */
+.image-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    background: rgba(5, 3, 10, 0.94);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.image-lightbox.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.image-lightbox img {
+    display: block;
+    max-width: 92vw;
+    max-height: 88vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 0 35px rgba(170, 80, 255, 0.25);
+    transform: scale(0.86);
+    transition: transform 0.35s ease;
+    cursor: default;
+}
+
+.image-lightbox.active img {
+    transform: scale(1);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    color: white;
+    background: transparent;
+    border: none;
+    font-size: 42px;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.lightbox-close:hover {
+    color: #b56cff;
+    transform: scale(1.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .image-lightbox,
+    .image-lightbox img {
+        transition: none;
+    }
+}
+
+
+/* ===== FIX KLIK FOTO PORTFOLIO ===== */
+
+.achievement-image img {
+    pointer-events: auto !important;
+    cursor: zoom-in;
+}
+
+.hobby-image img,
+.gallery-photo img,
+.astro-card img,
+.img-box img,
+.about-img img {
+    cursor: zoom-in;
+}
+
+/* ===== LIGHTBOX TEMA UNGU ===== */
+
+.image-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(5, 3, 10, 0.94);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.image-lightbox.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.image-lightbox img {
+    display: block;
+    max-width: 92vw;
+    max-height: 88vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 0 35px rgba(170, 80, 255, 0.25);
+    transform: scale(0.85);
+    transition: transform 0.35s ease;
+    cursor: default;
+}
+
+.image-lightbox.active img {
+    transform: scale(1);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    color: white;
+    background: transparent;
+    border: none;
+    font-size: 42px;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.lightbox-close:hover {
+    color: #b56cff;
+    transform: scale(1.1);
 }

@@ -289,3 +289,57 @@ if (portfolioTrack) {
         }
     }, true);
 }
+
+
+
+/* ===== GLOBAL IMAGE LIGHTBOX ===== */
+document.addEventListener("DOMContentLoaded", () => {
+    const lightbox = document.createElement("div");
+    lightbox.className = "image-lightbox";
+
+    const enlargedImage = document.createElement("img");
+    enlargedImage.alt = "Foto diperbesar";
+
+    const closeButton = document.createElement("button");
+    closeButton.className = "lightbox-close";
+    closeButton.innerHTML = "&times;";
+    closeButton.setAttribute("aria-label", "Tutup foto");
+
+    lightbox.append(closeButton, enlargedImage);
+    document.body.appendChild(lightbox);
+
+    function openPhoto(photo) {
+        enlargedImage.src = photo.currentSrc || photo.src;
+        enlargedImage.alt = photo.alt || "Foto diperbesar";
+        lightbox.classList.add("active");
+        document.body.style.overflow = "hidden";
+    }
+
+    function closePhoto() {
+        lightbox.classList.remove("active");
+        document.body.style.overflow = "";
+    }
+
+    document.addEventListener("click", (event) => {
+        const photo = event.target.closest(
+            ".hobby-image img, .achievement-image img, .gallery-photo img, .astro-card img, .img-box img, .about-img img"
+        );
+
+        if (!photo || lightbox.contains(event.target)) return;
+
+        openPhoto(photo);
+    });
+
+    closeButton.addEventListener("click", closePhoto);
+
+    lightbox.addEventListener("click", (event) => {
+        if (event.target === lightbox) closePhoto();
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closePhoto();
+    });
+});
+
+
+
