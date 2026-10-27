@@ -437,6 +437,86 @@
         </section>
     </main>
 
+<!-- GUIDEFs MUSIC PLAYER -->
+<div class="music-island" id="music-island">
+    <button class="music-trigger" id="music-trigger"
+            aria-expanded="false" aria-label="Buka music player">
+        <span class="music-disc">
+            <i class="fas fa-music"></i>
+        </span>
+        <span class="music-trigger-text">
+            <strong>GUIDEFs</strong>
+            <small id="mini-status">MUSIC PLAYER</small>
+        </span>
+        <i class="fas fa-chevron-down music-chevron"></i>
+    </button>
+
+    <div class="music-panel" id="music-panel" hidden>
+        <div class="music-panel-heading">
+            <div>
+                <span class="music-eyebrow">GUIDEFs / AUDIO SYSTEM</span>
+                <h3>Music <span>Player</span></h3>
+            </div>
+            <button id="music-close" class="music-close"
+                    aria-label="Tutup music player">
+                <i class="fas fa-xmark"></i>
+            </button>
+        </div>
+
+        <form class="music-search" id="music-search">
+            <i class="fas fa-magnifying-glass"></i>
+            <input id="music-query" type="search"
+                   placeholder="Cari lagu atau artis..."
+                   aria-label="Cari lagu" required>
+            <button type="submit" aria-label="Cari">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </form>
+
+        <p class="music-message" id="music-message">
+            Cari lagu favorit lu.
+        </p>
+
+        <div class="music-results" id="music-results"></div>
+
+        <div class="music-now">
+            <div class="music-art">
+                <i class="fas fa-compact-disc"></i>
+            </div>
+            <div class="music-track-info">
+                <small>NOW PLAYING</small>
+                <strong id="music-title">Belum ada lagu</strong>
+                <span id="music-artist">Pilih lagu untuk memulai</span>
+            </div>
+            <button class="music-control" id="music-play"
+                    aria-label="Putar atau jeda">
+                <i class="fas fa-play" id="music-play-icon"></i>
+            </button>
+        </div>
+
+        <div class="music-progress">
+            <span id="music-current">0:00</span>
+            <input id="music-seek" type="range" min="0"
+                   max="100" value="0" aria-label="Posisi lagu">
+            <span id="music-duration">0:00</span>
+        </div>
+
+        <div class="music-bottom">
+            <span><i class="fab fa-youtube"></i> YouTube Player</span>
+            <label>
+                <i class="fas fa-volume-high"></i>
+                <input id="music-volume" type="range" min="0"
+                       max="100" value="70" aria-label="Volume">
+            </label>
+        </div>
+
+        <!-- Pemutar resmi YouTube -->
+        <div class="youtube-player-wrap">
+            <div id="youtube-player"></div>
+        </div>
+    </div>
+</div>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
 </body>
