@@ -766,6 +766,152 @@ if (musicIsland) {
     }
 }
 
+/* =====================================
+   GUIDEFs GUESTBOOK - SUPABASE
+===================================== */
 
+// GANTI DENGAN DATA PROJECT SUPABASE LU
+const SUPABASE_URL = "https://lurcvyhuajsamrqvsjma.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_SAUkc4td_NbczC_gWCT8pQ_gnhhMohW";
 
+const guestbookForm = document.getElementById("guestbook-form");
+const guestbookName = document.getElementById("guestbook-name");
+const guestbookMessage = document.getElementById("guestbook-message");
+const guestbookList = document.getElementById("guestbook-list");
+const guestbookStatus = document.getElementById("guestbook-status");
+const guestbookSubmit = document.getElementById("guestbook-submit");
+const guestbookCount = document.getElementById("guestbook-count");
+
+if (
+    guestbookForm &&
+    window.supabase &&
+    SUPABASE_URL !== "MASUKKAN_PROJECT_URL" &&
+    SUPABASE_ANON_KEY !== "MASUKKAN_ANON_KEY"
+) {
+    const guestbookDB = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+    // MEMUAT KOMENTAR
+    async function loadGuestbook() {
+        guestbookList.innerHTML = "";
+
+        const { data, error } = await guestbookDB
+            .from("guestbook_comments")
+            .select("id, name, message, created_at")
+            .order("created_at", { ascending: false })
+            .limit(30);
+
+        if (error) {
+            guestbookList.textContent = "Gagal memuat pesan.";
+            console.error("Guestbook error:", error);
+            return;
+        }
+
+        guestbookCount.textContent = `${data.length} pesan`;
+
+        if (data.length === 0) {
+            guestbookList.textContent =
+                "Belum ada pesan. Jadilah yang pertama!";
+            guestbookList.className = "guestbook-empty";
+            return;
+        }
+
+        guestbookList.className = "";
+
+        data.forEach(comment => {
+            const card = document.createElement("div");
+            card.className = "guestbook-comment";
+
+            const header = document.createElement("div");
+            header.className = "guestbook-comment-header";
+
+            const name = document.createElement("span");
+            name.className = "guestbook-comment-name";
+            name.textContent = comment.name;
+
+            const date = document.createElement("span");
+            date.className = "guestbook-comment-date";
+            date.textContent = new Date(
+                comment.created_at
+            ).toLocaleString("id-ID", {
+                dateStyle: "medium",
+                timeStyle: "short"
+            });
+
+            const message = document.createElement("p");
+            message.className = "guestbook-comment-message";
+            message.textContent = comment.message;
+
+            header.append(name, date);
+            card.append(header, message);
+
+            guestbookList.appendChild(card);
+        });
+    }
+
+    // MENGIRIM KOMENTAR
+    guestbookForm.addEventListener("submit", async event => {
+        event.preventDefault();
+
+        const name = guestbookName.value.trim();
+        const message = guestbookMessage.value.trim();
+
+        if (name.length < 2 || name.length > 30) {
+            guestbookStatus.textContent =
+                "Nama harus terdiri dari 2–30 karakter.";
+            return;
+        }
+
+        if (message.length < 2 || message.length > 500) {
+            guestbookStatus.textContent =
+                "Pesan harus terdiri dari 2–500 karakter.";
+            return;
+        }
+
+        guestbookSubmit.disabled = true;
+        guestbookSubmit.textContent = "Mengirim...";
+        guestbookStatus.textContent = "";
+
+        const { error } = await guestbookDB
+            .from("guestbook_comments")
+            .insert({
+                name: name,
+                message: message
+            });
+
+        if (error) {
+            console.error("Guestbook insert error:", error);
+
+            guestbookStatus.textContent =
+                "Pesan gagal dikirim. Coba lagi.";
+
+            guestbookSubmit.disabled = false;
+            guestbookSubmit.innerHTML =
+                '<i class="fas fa-paper-plane"></i> Kirim Pesan';
+
+            return;
+        }
+
+        guestbookForm.reset();
+
+        guestbookStatus.textContent =
+            "Pesan berhasil dikirim!";
+
+        guestbookSubmit.disabled = false;
+        guestbookSubmit.innerHTML =
+            '<i class="fas fa-paper-plane"></i> Kirim Pesan';
+
+        await loadGuestbook();
+    });
+
+    // TAMPILKAN KOMENTAR SAAT WEBSITE DIBUKA
+    loadGuestbook();
+
+} else if (guestbookForm) {
+    console.error("Supabase belum dikonfigurasi.");
+    guestbookStatus.textContent =
+        "Guestbook belum terhubung ke database.";
+}
 
