@@ -430,6 +430,66 @@
                     </a>
                 </div>
 
+<!-- GUESTBOOK -->
+<div class="guestbook" data-aos="fade-up">
+
+    <div class="guestbook-heading">
+        <p class="section-label">GUESTBOOK</p>
+        <h3>Leave a <span>Message</span></h3>
+        <p>
+            Tinggalkan pesan, kesan, atau sekadar sapaan
+            untuk pengunjung lainnya.
+        </p>
+    </div>
+
+    <form id="guestbook-form" class="guestbook-form">
+
+        <div class="guestbook-input">
+            <label for="guestbook-name">Nama</label>
+            <input
+                type="text"
+                id="guestbook-name"
+                placeholder="Masukkan nama kamu"
+                maxlength="30"
+                required
+            >
+        </div>
+
+        <div class="guestbook-input">
+            <label for="guestbook-message">Pesan</label>
+            <textarea
+                id="guestbook-message"
+                placeholder="Tuliskan pesan kamu..."
+                maxlength="500"
+                rows="4"
+                required
+            ></textarea>
+        </div>
+
+        <button type="submit" id="guestbook-submit">
+            <i class="fas fa-paper-plane"></i>
+            Kirim Pesan
+        </button>
+
+        <p id="guestbook-status" aria-live="polite"></p>
+
+    </form>
+
+    <div class="guestbook-comments">
+
+        <div class="guestbook-comments-heading">
+            <h4>Visitor Messages</h4>
+            <span id="guestbook-count">0 pesan</span>
+        </div>
+
+        <div id="guestbook-list">
+            <p class="guestbook-empty">Memuat pesan...</p>
+        </div>
+
+    </div>
+
+</div>                
+
                 <p class="contact-footer">
                     © <span id="contact-year">2026</span> Azpri. All rights reserved.
                 </p>
@@ -518,6 +578,9 @@
 </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- SUPABASE -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="script.js"></script>
 </body>
 </html>
