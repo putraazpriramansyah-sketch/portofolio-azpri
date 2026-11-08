@@ -172,36 +172,150 @@
     }
 }
 
-/* PETUNJUK PARTISI */
-.partisi-shortcut {
+/* ===== PARTISI LOADER ===== */
+body.partisi-page.loading {
+    overflow: hidden;
+}
+
+body.partisi-page #loader {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
     display: flex;
     align-items: center;
-    gap: 9px;
-    text-decoration: none;
+    justify-content: center;
+    background: #080808;
 }
 
-.partisi-shortcut span {
-    opacity: 1;
-    transform: translateX(0);
-    transition: opacity 0.4s ease, transform 0.4s ease;
+body.partisi-page #loader.fade-out {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .7s ease, visibility .7s ease;
 }
 
-/* Tampilan mobile */
-@media (max-width: 768px) {
-    .partisi-shortcut span {
-        display: inline-block;
-        font-size: 10px;
-        letter-spacing: 1px;
+/* ===== PURPLE ARCHIVE LOADER ===== */
+
+#partisi-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+
+    background:
+        radial-gradient(ellipse at 50% 40%, #38204f 0%, transparent 55%),
+        linear-gradient(135deg, #100b18, #1c1029, #0c0912);
+
+    transition: opacity .7s ease, visibility .7s ease;
+}
+
+#partisi-loader.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.archive-loader {
+    width: 100%;
+    max-width: 430px;
+    padding: 25px;
+    border: 1px solid rgba(198, 154, 255, .2);
+    border-radius: 18px;
+    background: rgba(25, 16, 37, .65);
+    box-shadow: 0 0 60px rgba(151, 85, 220, .12);
+    animation: archiveAppear .8s ease both;
+}
+
+.archive-label,
+.archive-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    color: #a58abf;
+}
+
+.archive-content {
+    text-align: center;
+    padding: 55px 0 45px;
+}
+
+.archive-icon {
+    width: 65px;
+    height: 65px;
+    margin: 0 auto 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 18px;
+    color: #dfc4ff;
+    font-size: 27px;
+    background: rgba(174, 116, 255, .13);
+    border: 1px solid rgba(198, 154, 255, .25);
+    box-shadow: 0 0 30px rgba(174, 116, 255, .15);
+}
+
+.archive-content h1 {
+    color: #fff;
+    font-size: clamp(17px, 4vw, 23px);
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+.archive-content h2 {
+    margin-top: 9px;
+    color: #c69aff;
+    font-size: 29px;
+    letter-spacing: 5px;
+}
+
+.archive-content h2 span {
+    color: #80609e;
+}
+
+.archive-content p {
+    margin-top: 15px;
+    color: #a995bb;
+    font-size: 11px;
+    letter-spacing: .5px;
+}
+
+.archive-progress {
+    height: 3px;
+    width: 100%;
+    background: #39284c;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 13px;
+}
+
+.archive-progress-bar {
+    width: 40%;
+    height: 100%;
+    border-radius: 10px;
+    background: #c69aff;
+    box-shadow: 0 0 12px #c69aff;
+    animation: archiveProgress 2.8s ease-in-out infinite;
+}
+
+@keyframes archiveProgress {
+    from { width: 5%; }
+    to { width: 100%; }
+}
+
+@keyframes archiveAppear {
+    from {
         opacity: 0;
-        transform: translateX(8px);
-        animation: partisiHint 0.8s ease forwards;
-        animation-delay: 0.7s;
+        transform: translateY(15px) scale(.97);
     }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
 
-    @keyframes partisiHint {
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
+body.partisi-page.loading {
+    overflow: hidden;
 }

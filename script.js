@@ -1,19 +1,38 @@
 
 /* ===== LOADER ===== */
-document.body.classList.add("loading");
 
-window.addEventListener("load", () => {
+const skipWelcome = sessionStorage.getItem("skipWelcome") === "1";
+
+if (skipWelcome) {
+    sessionStorage.removeItem("skipWelcome");
+
     const loader = document.getElementById("loader");
 
-    setTimeout(() => {
-        loader.classList.add("fade-out");
+    if (loader) {
+        loader.style.display = "none";
+    }
+
+    document.body.classList.remove("loading");
+
+} else {
+    document.body.classList.add("loading");
+
+    window.addEventListener("load", () => {
+        const loader = document.getElementById("loader");
+
+        if (!loader) return;
 
         setTimeout(() => {
-            loader.style.display = "none";
-            document.body.classList.remove("loading");
-        }, 700);
-    }, 2800);
-});
+            loader.classList.add("fade-out");
+
+            setTimeout(() => {
+                loader.style.display = "none";
+                document.body.classList.remove("loading");
+            }, 700);
+
+        }, 2800);
+    });
+}
 
 /* ===== TYPING EFFECT ===== */
 
