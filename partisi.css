@@ -240,3 +240,12 @@ body.partisi-page.loading {
     color: #c084fc;
     font-size: 13px;
 }
+
+/* HIDE SCROLLBAR */
+.partisi-page {
+    scrollbar-width: none;
+}
+
+.partisi-page::-webkit-scrollbar {
+    display: none;
+}
