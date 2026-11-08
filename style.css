@@ -2436,17 +2436,25 @@ h6 {
     position: fixed;
     left: 0;
     top: 0;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #b56cff;
-    box-shadow:
-        0 0 6px #b56cff,
-        0 0 14px #8a2be2;
+    width: 14px;
+    height: 14px;
+    background: #c58aff;
     pointer-events: none;
     z-index: 99999;
     transform: translate(-50%, -50%);
-    animation: particleFade 650ms ease-out forwards;
+    clip-path: polygon(
+        50% 0%,
+        61% 35%,
+        100% 50%,
+        61% 65%,
+        50% 100%,
+        39% 65%,
+        0% 50%,
+        39% 35%
+    );
+    filter: drop-shadow(0 0 20px #b56cff)
+            drop-shadow(0 0 10px #8a2be2);
+    animation: particleFade 750ms ease-out forwards;
 }
 
 @keyframes particleFade {
