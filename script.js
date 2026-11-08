@@ -860,74 +860,77 @@ if (
         SUPABASE_ANON_KEY
     );
 
-    // MEMUAT KOMENTAR
-    async function loadGuestbook() {
-        guestbookList.innerHTML = "";
+// MEMUAT KOMENTAR
+async function loadGuestbook() {
+    guestbookList.innerHTML = "";
 
-        const { data, error } = await guestbookDB
-            .from("guestbook_comments")
-            .select("id, name, message, created_at, is_pinned")
-            .order("is_pinned", { ascending: false })
-            .order("created_at", { ascending: false })
-            .limit(30);
+    const { data, error } = await guestbookDB
+        .from("guestbook_comments")
+        .select("id, name, message, created_at, is_pinned")
+        .order("is_pinned", { ascending: false })
+        .order("created_at", { ascending: false })
+        .limit(30);
 
-        if (error) {
-            guestbookList.textContent = "Gagal memuat pesan.";
-            console.error("Guestbook error:", error);
-            return;
-        }
-
-        guestbookCount.textContent = `${data.length} pesan`;
-
-        if (data.length === 0) {
-            guestbookList.textContent =
-                "Belum ada pesan. Jadilah yang pertama!";
-            guestbookList.className = "guestbook-empty";
-            return;
-        }
-
-        guestbookList.className = "";
-
-        data.forEach(comment => {
-            const card = document.createElement("div");
-            card.className = "guestbook-comment";
-
-            const header = document.createElement("div");
-            header.className = "guestbook-comment-header";
-
-            const name = document.createElement("span");
-            name.className = "guestbook-comment-name";
-            name.textContent = comment.name;
-
-            const date = document.createElement("span");
-            date.className = "guestbook-comment-date";
-            date.textContent = new Date(
-                comment.created_at
-            ).toLocaleString("id-ID", {
-                dateStyle: "medium",
-                timeStyle: "short"
-            });
-
-            const message = document.createElement("p");
-            message.className = "guestbook-comment-message";
-            message.textContent = comment.message;
-
-            if (comment.is_pinned) {
-                const pin = document.createElement("span");
-                pin.className = "guestbook-pin";
-                pin.textContent = "📌 Pinned";
-
-                header.append(name, pin, date);
-            } else {
-                header.append(name, date);
-            }
-
-            card.append(header, message);
-
-            guestbookList.appendChild(card);
-        });
+    if (error) {
+        guestbookList.textContent = "Gagal memuat pesan.";
+        console.error("Guestbook error:", error);
+        return;
     }
 
+    guestbookCount.textContent = `${data.length} pesan`;
+
+    if (data.length === 0) {
+        guestbookList.textContent =
+            "Belum ada pesan. Jadilah yang pertama!";
+        guestbookList.className = "guestbook-empty";
+        return;
+    }
+
+    guestbookList.className = "";
+
+    data.forEach(comment => {
+        const card = document.createElement("div");
+        card.className = "guestbook-comment";
+
+        const header = document.createElement("div");
+        header.className = "guestbook-comment-header";
+
+        const author = document.createElement("div");
+        author.className = "guestbook-comment-author";
+
+        const name = document.createElement("span");
+        name.className = "guestbook-comment-name";
+        name.textContent = comment.name;
+
+        author.appendChild(name);
+
+        if (comment.is_pinned) {
+            const pin = document.createElement("span");
+            pin.className = "guestbook-pin";
+            pin.innerHTML = '<i class="fas fa-thumbtack"></i>';
+            author.appendChild(pin);
+        }
+
+        const date = document.createElement("span");
+        date.className = "guestbook-comment-date";
+        date.textContent = new Date(comment.created_at).toLocaleString(
+            "id-ID",
+            {
+                dateStyle: "medium",
+                timeStyle: "short"
+            }
+        );
+
+        const message = document.createElement("p");
+        message.className = "guestbook-comment-message";
+        message.textContent = comment.message;
+
+        header.append(author, date);
+        card.append(header, message);
+
+        guestbookList.appendChild(card);
+    });
+}
     // MENGIRIM KOMENTAR
     guestbookForm.addEventListener("submit", async event => {
         event.preventDefault();
