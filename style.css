@@ -3104,3 +3104,425 @@ h6 {
         font-size: 10px;
     }
 }
+
+/* =====================================
+   GUIDEFs MUSIC PLAYER - COMPACT DESIGN
+===================================== */
+
+.music-island {
+    position: fixed;
+    top: 85px;
+    right: 20px;
+    bottom: auto;
+    left: auto;
+    width: 300px;
+    max-width: calc(100vw - 24px);
+    z-index: 9999;
+}
+
+/* CAPSULE */
+
+.music-trigger {
+    width: fit-content;
+    max-width: 100%;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 14px;
+    border-radius: 50px;
+}
+
+/* PANEL */
+
+.music-panel {
+    width: 100%;
+    margin-top: 9px;
+    padding: 14px;
+    border-radius: 17px;
+    max-height: calc(100dvh - 115px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+/* HEADING */
+
+.music-panel-heading {
+    margin-bottom: 12px;
+}
+
+.music-panel-heading h3 {
+    font-size: 17px;
+}
+
+.music-eyebrow {
+    font-size: 9px;
+}
+
+/* SEARCH */
+
+.music-search {
+    min-height: 39px;
+    padding: 0 10px;
+}
+
+.music-search input {
+    min-width: 0;
+    font-size: 11px;
+}
+
+.music-message {
+    font-size: 10px;
+    margin: 9px 0;
+}
+
+/* SEARCH RESULTS */
+
+.music-results {
+    max-height: 125px;
+    overflow-y: auto;
+    margin-bottom: 12px;
+}
+
+.music-result {
+    padding: 7px;
+    gap: 9px;
+}
+
+.music-result img {
+    width: 48px;
+    height: 34px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.music-result strong {
+    font-size: 10px;
+}
+
+.music-result small {
+    font-size: 9px;
+}
+
+/* NOW PLAYING */
+
+.music-now {
+    gap: 9px;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+.music-art {
+    width: 37px;
+    height: 37px;
+    flex-shrink: 0;
+}
+
+.music-track-info {
+    min-width: 0;
+}
+
+.music-track-info small {
+    font-size: 8px;
+}
+
+.music-track-info strong {
+    font-size: 10px;
+}
+
+.music-track-info span {
+    font-size: 9px;
+}
+
+.music-control {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+}
+
+/* PROGRESS */
+
+.music-progress {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 10px 0;
+}
+
+.music-progress span {
+    font-size: 9px;
+    white-space: nowrap;
+}
+
+.music-progress input {
+    min-width: 0;
+}
+
+/* BOTTOM CONTROL */
+
+.music-bottom {
+    margin: 8px 0;
+    font-size: 10px;
+}
+
+.music-bottom label {
+    gap: 6px;
+}
+
+/* YOUTUBE PLAYER */
+
+.youtube-player-wrap {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+#youtube-player,
+#youtube-player iframe {
+    display: block;
+    width: 100% !important;
+    height: 155px !important;
+    max-width: 100%;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+    .music-island {
+        top: 76px;
+        right: 10px;
+        width: min(290px, calc(100vw - 20px));
+    }
+
+    .music-trigger {
+        padding: 8px 12px;
+        gap: 8px;
+    }
+
+    .music-disc {
+        width: 30px;
+        height: 30px;
+    }
+
+    .music-trigger-text strong {
+        font-size: 11px;
+    }
+
+    .music-trigger-text small {
+        font-size: 8px;
+    }
+
+    .music-panel {
+        padding: 12px;
+        max-height: calc(100dvh - 100px);
+    }
+
+    .music-results {
+        max-height: 105px;
+    }
+
+    #youtube-player,
+    #youtube-player iframe {
+        height: 130px !important;
+    }
+}
+
+/* ===== PARTISI SHORTCUT ===== */
+.partisi-shortcut {
+    position: fixed;
+    right: 28px;
+    bottom: 28px;
+    z-index: 999;
+
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 12px 16px;
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: 30px;
+
+    background: rgba(15, 15, 15, 0.9);
+    color: #c084fc;
+
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-decoration: none;
+
+    transition: 0.3s ease;
+    backdrop-filter: blur(12px);
+}
+
+.partisi-shortcut i {
+    font-size: 15px;
+}
+
+.partisi-shortcut:hover {
+    background: #a855f7;
+    color: white;
+    border-color: #a855f7;
+    transform: translateY(-4px);
+}
+
+@media (max-width: 600px) {
+    .partisi-shortcut {
+        right: 18px;
+        bottom: 18px;
+        padding: 13px;
+    }
+
+    .partisi-shortcut span {
+        display: none;
+    }
+}
+
+
+
+/* ===== iOS 26 LIQUID GLASS - PARTISI HINT ===== */
+
+@media (max-width: 600px) {
+
+    .partisi-shortcut::after {
+        content: "✦  Rangkuman partisi ada di sini";
+
+        position: absolute;
+        right: -2px;
+        bottom: calc(100% + 11px);
+
+        width: max-content;
+        max-width: 220px;
+        padding: 11px 15px;
+
+        color: #fff;
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: .2px;
+        white-space: nowrap;
+        text-transform: none;
+
+        background:
+            linear-gradient(
+                115deg,
+                rgba(255,255,255,.13),
+                transparent 35%,
+                rgba(181,108,255,.18) 70%,
+                rgba(255,255,255,.08)
+            ),
+            rgba(25, 17, 39, .82);
+
+        background-size: 220% 220%;
+
+        border: 1px solid rgba(220,190,255,.38);
+        border-radius: 16px 16px 5px 16px;
+
+        backdrop-filter: blur(22px) saturate(190%);
+        -webkit-backdrop-filter: blur(22px) saturate(190%);
+
+        box-shadow:
+            0 5px 25px rgba(0,0,0,.35),
+            0 0 12px rgba(181,108,255,.28),
+            inset 0 1px 1px rgba(255,255,255,.25);
+
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+
+        transform: translateY(12px) scale(.88);
+        transform-origin: bottom right;
+
+        transition:
+            opacity .4s ease,
+            transform .5s cubic-bezier(.2,.8,.2,1),
+            visibility .4s;
+    }
+
+    /* UJUNG TAJAM BUBBLE */
+    .partisi-shortcut::before {
+        content: "";
+
+        position: absolute;
+        right: 10px;
+        bottom: calc(100% + 1px);
+
+        width: 14px;
+        height: 13px;
+
+        background: rgba(35, 24, 52, .96);
+
+        clip-path: polygon(0 0, 100% 0, 100% 100%);
+
+        filter: drop-shadow(0 0 5px #b56cff);
+
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+
+        transition: opacity .4s ease;
+    }
+
+    /* ANIMASI KETIKA MUNCUL */
+    .partisi-shortcut.show-hint::after,
+    .partisi-shortcut.show-hint::before {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .partisi-shortcut.show-hint::after {
+        transform: translateY(0) scale(1);
+        animation:
+            partisiGlassShimmer 3s ease-in-out infinite,
+            partisiGlassGlow 2.5s ease-in-out infinite;
+    }
+
+    .partisi-shortcut.show-hint::before {
+        animation: partisiTailGlow 2.5s ease-in-out infinite;
+    }
+}
+
+/* CAHAYA BERGERAK */
+@keyframes partisiGlassShimmer {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* GLOW BERDENYUT */
+@keyframes partisiGlassGlow {
+    0%, 100% {
+        box-shadow:
+            0 5px 2px rgba(0,0,0,.35),
+            0 0 12px rgba(181,108,255,.25),
+            inset 0 1px 1px rgba(255,255,255,.25);
+    }
+
+    50% {
+        box-shadow:
+            0 5px 10px rgba(0,0,0,.4),
+            0 0 12px rgba(181,108,255,.55),
+            0 0 15px rgba(181,108,255,.15),
+            inset 0 1px 2px rgba(255,255,255,.4);
+    }
+}
+
+@keyframes partisiTailGlow {
+    0%, 100% {
+        filter: drop-shadow(0 0 3px #b56cff);
+    }
+
+    50% {
+        filter: drop-shadow(0 0 9px #b56cff);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .partisi-shortcut.show-hint::after,
+    .partisi-shortcut.show-hint::before {
+        animation: none;
+    }
+}

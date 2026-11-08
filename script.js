@@ -698,29 +698,39 @@ const musicIsland = document.getElementById("music-island");
 
 if (musicIsland) {
     let dragging = false;
+    let moved = false;
+    let suppressClick = false;
+
     let startX = 0;
     let startY = 0;
     let initialX = 0;
     let initialY = 0;
 
-    musicIsland.style.position = "fixed";
-    musicIsland.style.right = "20px";
-    musicIsland.style.bottom = "20px";
-    musicIsland.style.left = "auto";
-    musicIsland.style.top = "auto";
-    musicIsland.style.zIndex = "9999";
-
-    // Gunakan tombol capsule sebagai area drag
     const dragHandle = document.getElementById("music-trigger");
+
+    // Posisi awal di kanan atas
+    function setInitialPosition() {
+        const isMobile = window.innerWidth <= 600;
+
+        musicIsland.style.position = "fixed";
+        musicIsland.style.top = isMobile ? "76px" : "85px";
+        musicIsland.style.right = isMobile ? "10px" : "20px";
+        musicIsland.style.left = "auto";
+        musicIsland.style.bottom = "auto";
+        musicIsland.style.zIndex = "9999";
+    }
+
+    setInitialPosition();
 
     if (dragHandle) {
         dragHandle.style.cursor = "grab";
         dragHandle.style.touchAction = "none";
 
-        dragHandle.addEventListener("pointerdown", (e) => {
+        dragHandle.addEventListener("pointerdown", e => {
             if (e.button !== 0) return;
 
             dragging = true;
+            moved = false;
 
             const rect = musicIsland.getBoundingClientRect();
 
@@ -735,18 +745,31 @@ if (musicIsland) {
             musicIsland.style.bottom = "auto";
 
             dragHandle.style.cursor = "grabbing";
+
             dragHandle.setPointerCapture(e.pointerId);
             e.preventDefault();
         });
 
-        dragHandle.addEventListener("pointermove", (e) => {
+        dragHandle.addEventListener("pointermove", e => {
             if (!dragging) return;
+
+            const distanceX = e.clientX - startX;
+            const distanceY = e.clientY - startY;
+
+            if (
+                Math.abs(distanceX) > 5 ||
+                Math.abs(distanceY) > 5
+            ) {
+                moved = true;
+            }
+
+            if (!moved) return;
 
             const maxX = window.innerWidth - musicIsland.offsetWidth;
             const maxY = window.innerHeight - musicIsland.offsetHeight;
 
-            const x = initialX + e.clientX - startX;
-            const y = initialY + e.clientY - startY;
+            const x = initialX + distanceX;
+            const y = initialY + distanceY;
 
             musicIsland.style.left =
                 `${Math.max(0, Math.min(x, maxX))}px`;
@@ -756,14 +779,39 @@ if (musicIsland) {
         });
 
         function stopDragging() {
+            if (!dragging) return;
+
             dragging = false;
             dragHandle.style.cursor = "grab";
+
+            if (moved) {
+                suppressClick = true;
+
+                setTimeout(() => {
+                    suppressClick = false;
+                }, 100);
+            }
         }
 
         dragHandle.addEventListener("pointerup", stopDragging);
         dragHandle.addEventListener("pointercancel", stopDragging);
         dragHandle.addEventListener("lostpointercapture", stopDragging);
+
+        // Mencegah capsule terbuka saat selesai digeser
+        dragHandle.addEventListener("click", e => {
+            if (suppressClick) {
+                e.preventDefault();
+                e.stopPropagation();
+                suppressClick = false;
+            }
+        }, true);
     }
+
+    window.addEventListener("resize", () => {
+        if (!musicIsland.style.left || musicIsland.style.left === "auto") {
+            setInitialPosition();
+        }
+    });
 }
 
 /* =====================================
@@ -915,3 +963,28 @@ if (
         "Guestbook belum terhubung ke database.";
 }
 
+
+/* ===== PARTISI HINT NOTIFICATION ===== */
+
+window.addEventListener("load", () => {
+    const shortcut = document.querySelector(".partisi-shortcut");
+
+    if (!shortcut) return;
+
+    // Tampilkan petunjuk
+    function showPartisiHint() {
+        if (window.innerWidth > 600) return;
+
+        shortcut.classList.add("show-hint");
+
+        setTimeout(() => {
+            shortcut.classList.remove("show-hint");
+        }, 4000);
+    }
+
+    // Tunggu loader selesai
+    setTimeout(showPartisiHint, 3500);
+
+    // Muncul kembali setiap 40 detik
+    setInterval(showPartisiHint, 20000);
+});

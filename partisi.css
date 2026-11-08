@@ -1,0 +1,207 @@
+
+/* ===== PARTISI PAGE ===== */
+
+.partisi-page {
+    min-height: 100vh;
+    background: #080808;
+    color: #ededed;
+    font-family: 'Poppins', sans-serif;
+    opacity: 0;
+    animation: pageEnter 0.7s ease forwards;
+}
+
+@keyframes pageEnter {
+    to {
+        opacity: 1;
+    }
+}
+
+/* NAVBAR */
+.partisi-navbar {
+    width: 100%;
+    padding: 25px 8%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.partisi-logo {
+    color: white;
+    font-size: 22px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.partisi-logo span {
+    color: #a855f7;
+}
+
+.partisi-back {
+    color: #aaa;
+    font-size: 12px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.partisi-back i {
+    margin-right: 7px;
+}
+
+.partisi-back:hover {
+    color: #c084fc;
+}
+
+/* CONTENT */
+.partisi-container {
+    max-width: 780px;
+    width: 88%;
+    margin: 95px auto 50px;
+}
+
+.partisi-heading {
+    margin-bottom: 42px;
+    animation: contentEnter 0.8s ease both;
+}
+
+.partisi-label {
+    color: #b678ec;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.partisi-heading h1 {
+    margin-top: 12px;
+    font-size: clamp(36px, 6vw, 52px);
+    font-weight: 600;
+    letter-spacing: -2px;
+    color: #fff;
+}
+
+.partisi-heading p {
+    margin-top: 8px;
+    color: #888;
+    font-size: 13px;
+}
+
+/* ARTICLE */
+.partisi-content {
+    animation: contentEnter 1s ease both;
+    animation-delay: 0.15s;
+}
+
+.partisi-content > p {
+    margin-bottom: 23px;
+    color: #bdbdbd;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 2.1;
+    text-align: justify;
+}
+
+.partisi-note {
+    margin-top: 38px;
+    padding: 23px 25px;
+    border-left: 2px solid #a855f7;
+    background: rgba(168, 85, 247, 0.055);
+}
+
+.partisi-note span {
+    display: block;
+    margin-bottom: 9px;
+    color: #c084fc;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.partisi-note p {
+    color: #c4c4c4;
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.9;
+}
+
+/* FOOTER */
+.partisi-footer {
+    margin-top: 75px;
+    padding: 22px 0;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    color: #666;
+    font-size: 10px;
+}
+
+.partisi-footer span:first-child {
+    color: #c084fc;
+    font-weight: 600;
+}
+
+/* ANIMATION */
+@keyframes contentEnter {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+    .partisi-navbar {
+        padding: 20px 6%;
+    }
+
+    .partisi-container {
+        margin-top: 65px;
+    }
+
+    .partisi-content > p {
+        font-size: 13px;
+        line-height: 2;
+        text-align: left;
+    }
+
+    .partisi-footer {
+        font-size: 9px;
+    }
+}
+
+/* PETUNJUK PARTISI */
+.partisi-shortcut {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    text-decoration: none;
+}
+
+.partisi-shortcut span {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Tampilan mobile */
+@media (max-width: 768px) {
+    .partisi-shortcut span {
+        display: inline-block;
+        font-size: 10px;
+        letter-spacing: 1px;
+        opacity: 0;
+        transform: translateX(8px);
+        animation: partisiHint 0.8s ease forwards;
+        animation-delay: 0.7s;
+    }
+
+    @keyframes partisiHint {
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+}
