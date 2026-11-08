@@ -241,11 +241,13 @@ body.partisi-page.loading {
     font-size: 13px;
 }
 
-/* HIDE SCROLLBAR */
-.partisi-page {
-    scrollbar-width: none;
+/* HILANGKAN SCROLLBAR PARTISI */
+html {
+    scrollbar-width: none !important;
 }
 
-.partisi-page::-webkit-scrollbar {
-    display: none;
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
 }

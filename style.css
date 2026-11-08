@@ -3541,3 +3541,9 @@ h6 {
     user-select: none;
     -webkit-user-drag: none;
 }
+
+@media (hover: none) {
+    .cursor-particle {
+        display: none;
+    }
+}

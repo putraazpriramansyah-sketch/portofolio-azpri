@@ -1007,3 +1007,40 @@ window.addEventListener("load", () => {
     // Muncul kembali setiap 40 detik
     setInterval(showPartisiHint, 20000);
 });
+
+/* ===== CURSOR & TOUCH PARTICLES ===== */
+
+let lastParticleTime = 0;
+
+function createParticle(x, y) {
+    const now = Date.now();
+
+    // Batasi jumlah partikel di HP
+    if (now - lastParticleTime < 25) return;
+    lastParticleTime = now;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const particle = document.createElement("span");
+    particle.className = "cursor-particle";
+
+    particle.style.left = `${x}px`;
+    particle.style.top = `${y}px`;
+
+    document.body.appendChild(particle);
+
+    setTimeout(() => particle.remove(), 650);
+}
+
+// Komputer
+document.addEventListener("mousemove", event => {
+    createParticle(event.clientX, event.clientY);
+});
+
+// HP
+document.addEventListener("touchmove", event => {
+    const touch = event.touches[0];
+    if (!touch) return;
+
+    createParticle(touch.clientX, touch.clientY);
+}, { passive: true });
