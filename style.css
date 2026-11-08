@@ -3545,3 +3545,8 @@ h6 {
     -webkit-user-drag: none;
 }
 
+.guestbook-pin {
+    color: #00ffd5;
+    font-size: 11px;
+    font-weight: 600;
+}

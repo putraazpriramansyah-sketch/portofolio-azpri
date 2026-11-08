@@ -866,7 +866,8 @@ if (
 
         const { data, error } = await guestbookDB
             .from("guestbook_comments")
-            .select("id, name, message, created_at")
+            .select("id, name, message, created_at, is_pinned")
+            .order("is_pinned", { ascending: false })
             .order("created_at", { ascending: false })
             .limit(30);
 
@@ -911,7 +912,16 @@ if (
             message.className = "guestbook-comment-message";
             message.textContent = comment.message;
 
-            header.append(name, date);
+            if (comment.is_pinned) {
+                const pin = document.createElement("span");
+                pin.className = "guestbook-pin";
+                pin.textContent = "📌 Pinned";
+
+                header.append(name, pin, date);
+            } else {
+                header.append(name, date);
+            }
+
             card.append(header, message);
 
             guestbookList.appendChild(card);
