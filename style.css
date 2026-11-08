@@ -2460,11 +2460,6 @@ h6 {
     }
 }
 
-@media (hover: none), (prefers-reduced-motion: reduce) {
-    .cursor-particle {
-        display: none;
-    }
-}
 
 
 /* ===== GUIDEFs MUSIC PLAYER : TOP RIGHT ===== */
@@ -3542,8 +3537,3 @@ h6 {
     -webkit-user-drag: none;
 }
 
-@media (hover: none) {
-    .cursor-particle {
-        display: none;
-    }
-}
