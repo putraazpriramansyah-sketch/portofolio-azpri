@@ -4,23 +4,44 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.add("partisi-loaded");
 });
 
+
+/* ===== PARTISI PAGE ===== */
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.body.classList.add("partisi-loaded");
+});
+
 /* ===== PARTISI LOADER ===== */
 
 document.body.classList.add("loading");
 
 window.addEventListener("load", () => {
     const loader = document.getElementById("partisi-loader");
+    const progress = document.querySelector(".loader-progress-fill");
+    const percent = document.getElementById("loader-percent");
 
-    if (!loader) return;
+    if (!loader || !progress || !percent) return;
 
-    setTimeout(() => {
-        loader.classList.add("fade-out");
+    let value = 0;
 
-        setTimeout(() => {
-            loader.style.display = "none";
-            document.body.classList.remove("loading");
-        }, 700);
+    const loading = setInterval(() => {
+        value += 1;
 
-    }, 2800);
+        progress.style.width = value + "%";
+        percent.textContent = value + "%";
+
+        if (value >= 100) {
+            clearInterval(loading);
+
+            setTimeout(() => {
+                loader.classList.add("fade-out");
+
+                setTimeout(() => {
+                    loader.style.display = "none";
+                    document.body.classList.remove("loading");
+                }, 700);
+
+            }, 300);
+        }
+    }, 30);
 });
-
