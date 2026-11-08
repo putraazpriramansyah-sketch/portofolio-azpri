@@ -3526,3 +3526,18 @@ h6 {
         animation: none;
     }
 }
+
+/* Hilangkan efek biru saat shortcut ditekan di mobile */
+.partisi-shortcut {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+.partisi-shortcut::before,
+.partisi-shortcut::after {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+}
