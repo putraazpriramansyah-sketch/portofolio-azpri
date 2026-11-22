@@ -82,72 +82,58 @@ if (textElement) {
     typeEffect();
 }
 
-/* ===== MOBILE MENU ===== */
-const menuToggle = document.querySelector("#menu-toggle");
-const iconToggle = document.querySelector("#icon-toggle");
+
+
+/* ===== LIQUID GLASS NAVIGATION ===== */
+
 const navLinks = document.querySelector("#nav-links");
 
-if (menuToggle && iconToggle && navLinks) {
-    menuToggle.addEventListener("click", () => {
-        const isOpen = navLinks.classList.toggle("active");
+if (navLinks) {
+    const links = navLinks.querySelectorAll("a");
+    const indicator = navLinks.querySelector(".nav-indicator");
 
-        iconToggle.classList.toggle("fa-bars", !isOpen);
-        iconToggle.classList.toggle("fa-xmark", isOpen);
+    function moveIndicator(link) {
+        if (!indicator || !link) return;
 
-        menuToggle.setAttribute("aria-expanded", String(isOpen));
-    });
+        indicator.style.width = `${link.offsetWidth}px`;
+        indicator.style.transform =
+            `translateX(${link.offsetLeft}px)`;
+    }
 
-    navLinks.querySelectorAll("a").forEach(link => {
+    function setActive(link) {
+        if (!link) return;
+
+        links.forEach(item => {
+            item.classList.toggle("active", item === link);
+        });
+
+        moveIndicator(link);
+    }
+
+    // Klik menu: langsung pindahkan indikator
+    links.forEach(link => {
         link.addEventListener("click", () => {
-            navLinks.classList.remove("active");
-            iconToggle.classList.remove("fa-xmark");
-            iconToggle.classList.add("fa-bars");
-            menuToggle.setAttribute("aria-expanded", "false");
+            setActive(link);
         });
     });
 
-    document.addEventListener("click", event => {
-        if (
-            navLinks.classList.contains("active") &&
-            !navLinks.contains(event.target) &&
-            !menuToggle.contains(event.target)
-        ) {
-            navLinks.classList.remove("active");
-            iconToggle.classList.remove("fa-xmark");
-            iconToggle.classList.add("fa-bars");
-            menuToggle.setAttribute("aria-expanded", "false");
-        }
+    // Tentukan menu awal
+    const initialLink =
+        [...links].find(link =>
+            link.getAttribute("href") === window.location.hash
+        ) ||
+        navLinks.querySelector("a.active") ||
+        links[0];
+
+    setActive(initialLink);
+
+    // Sesuaikan ukuran layar
+    window.addEventListener("resize", () => {
+        const activeLink = navLinks.querySelector("a.active");
+        moveIndicator(activeLink);
     });
 }
 
-/* ===== ACTIVE NAVIGATION ===== */
-const pageSections = document.querySelectorAll("main section[id]");
-const pageLinks = document.querySelectorAll(".nav-links a");
-
-if ("IntersectionObserver" in window) {
-    const sectionObserver = new IntersectionObserver(
-        entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    pageLinks.forEach(link => {
-                        const isActive =
-                            link.getAttribute("href") ===
-                            `#${entry.target.id}`;
-
-                        link.classList.toggle("active", isActive);
-                    });
-                }
-            });
-        },
-        {
-            rootMargin: "-30% 0px -60% 0px"
-        }
-    );
-
-    pageSections.forEach(section => {
-        sectionObserver.observe(section);
-    });
-}
 
 
 /* ===== AOS ANIMATIONS ===== */
@@ -728,16 +714,16 @@ if (musicIsland) {
     const dragHandle = document.getElementById("music-trigger");
 
     // Posisi awal di kanan atas
+    
     function setInitialPosition() {
-        const isMobile = window.innerWidth <= 600;
-
         musicIsland.style.position = "fixed";
-        musicIsland.style.top = isMobile ? "76px" : "85px";
-        musicIsland.style.right = isMobile ? "10px" : "20px";
+        musicIsland.style.top = "12px";
+        musicIsland.style.right = "12px";
         musicIsland.style.left = "auto";
         musicIsland.style.bottom = "auto";
         musicIsland.style.zIndex = "9999";
     }
+
 
     setInitialPosition();
 
