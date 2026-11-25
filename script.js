@@ -1043,3 +1043,4 @@ document.addEventListener("touchmove", event => {
 
     createParticle(touch.clientX, touch.clientY);
 }, { passive: true });
+

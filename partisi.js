@@ -1,10 +1,3 @@
-﻿// ===== PARTISI PAGE =====
-
-document.addEventListener("DOMContentLoaded", () => {
-    document.body.classList.add("partisi-loaded");
-});
-
-
 /* ===== PARTISI PAGE ===== */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -19,6 +12,7 @@ window.addEventListener("load", () => {
     const loader = document.getElementById("partisi-loader");
     const progress = document.querySelector(".loader-progress-fill");
     const percent = document.getElementById("loader-percent");
+    const statusText = document.getElementById("loader-status");
 
     if (!loader || !progress || !percent) return;
 
@@ -29,6 +23,16 @@ window.addEventListener("load", () => {
 
         progress.style.width = value + "%";
         percent.textContent = value + "%";
+
+        if (statusText) {
+            if (value < 35) {
+                statusText.textContent = "Menyiapkan catatan pembelajaran...";
+            } else if (value < 75) {
+                statusText.textContent = "Sinkronisasi komponen sistem...";
+            } else {
+                statusText.textContent = "Menampilkan partisi 1 & 2...";
+            }
+        }
 
         if (value >= 100) {
             clearInterval(loading);
@@ -43,7 +47,7 @@ window.addEventListener("load", () => {
 
             }, 300);
         }
-    }, 30);
+    }, 25);
 });
 
 /* ===== CURSOR & TOUCH PARTICLES ===== */
@@ -53,7 +57,6 @@ let lastParticleTime = 0;
 function createParticle(x, y) {
     const now = Date.now();
 
-    // Batasi jumlah partikel di HP
     if (now - lastParticleTime < 25) return;
     lastParticleTime = now;
 
@@ -70,12 +73,10 @@ function createParticle(x, y) {
     setTimeout(() => particle.remove(), 650);
 }
 
-// Komputer
 document.addEventListener("mousemove", event => {
     createParticle(event.clientX, event.clientY);
 });
 
-// HP
 document.addEventListener("touchmove", event => {
     const touch = event.touches[0];
     if (!touch) return;
