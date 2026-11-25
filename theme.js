@@ -11,7 +11,11 @@
   function apply(t) {
     root.dataset.theme = t;
     try { localStorage.setItem(KEY, t); } catch (e) {}
-    if (btn) btn.setAttribute('aria-label', t === 'night' ? 'Ganti ke mode night' : t === 'sunset' ? 'Ganti ke mode sore' : 'Ganti ke mode terang');
+    if (btn) {
+      btn.setAttribute('aria-label', t === 'night' ? 'Ganti ke mode sunset' : t === 'sunset' ? 'Ganti ke mode normal' : 'Ganti ke mode night');
+      const symbol = btn.querySelector('.theme-symbol');
+      if (symbol) symbol.textContent = t === 'night' ? '☾' : t === 'sunset' ? '☼' : '✺';
+    }
     if (ready) kick();
   }
   apply(root.dataset.theme || (isNight() ? 'night' : 'light'));
@@ -29,26 +33,8 @@
     });
   }
 
-  /* ---------- SCROLL HALUS (easing iOS) ---------- */
-  let cancelScroll = false;
-  ['wheel', 'touchstart', 'keydown'].forEach(ev => addEventListener(ev, () => { cancelScroll = true; }, { passive: true }));
-  function smoothTo(y, d = 1000) {
-    const y0 = scrollY, dy = y - y0, t0 = performance.now();
-    if (reduced.matches) return scrollTo(0, y);
-    cancelScroll = false; root.style.scrollBehavior = 'auto';
-    (function step(now) {
-      const p = Math.min(1, (now - t0) / d);
-      scrollTo(0, y0 + dy * (1 - Math.pow(1 - p, 5)));
-      if (p < 1 && !cancelScroll) requestAnimationFrame(step); else root.style.scrollBehavior = '';
-    })(t0);
-  }
-  document.addEventListener('click', e => {
-    const a = e.target.closest('a[href^="#"]'); if (!a) return;
-    const el = a.getAttribute('href').length > 1 && document.getElementById(a.getAttribute('href').slice(1));
-    if (!el) return;
-    e.preventDefault(); smoothTo(el.getBoundingClientRect().top + scrollY);
-    history.pushState(null, '', a.getAttribute('href'));
-  });
+  /* Native scrolling is smoother and cheaper on mobile than a JS scroll loop. */
+  root.style.scrollBehavior = reduced.matches ? 'auto' : 'smooth';
 
   /* ---------- NAVBAR: pill + scroll-spy ---------- */
   const nav = document.getElementById('nav-links');
@@ -123,7 +109,7 @@
   const cv = document.getElementById('sky-night');
   if (cv) {
     const cx = cv.getContext('2d');
-    let W, H, dpr, S, band, stars = [], shoot = null, nextShoot = 4000, target = 0, sp = 0, raf = 0;
+    let W, H, dpr, S, band, stars = [], shoot = null, nextShoot = 4000, target = 0, sp = 0, raf = 0, lastFrame = 0;
     const NT = 256, nt = Float32Array.from({ length: NT * NT }, rnd);
     function vn(x, y) {
       const xi = Math.floor(x), yi = Math.floor(y), xf = x - xi, yf = y - yi, u = xf * xf * (3 - 2 * xf), v = yf * yf * (3 - 2 * yf);
@@ -135,10 +121,10 @@
     const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 
     function build() {
-      dpr = Math.min(devicePixelRatio || 1, 1.5); W = innerWidth; H = innerHeight;
+      dpr = Math.min(devicePixelRatio || 1, W < 769 ? 1 : 1.25); W = innerWidth; H = innerHeight;
       cv.width = W * dpr; cv.height = H * dpr;
       S = Math.ceil(Math.hypot(W, H) * 1.25);
-      const gw = W < 769 ? 360 : 560, im = new ImageData(gw, gw), L = new Float32Array(gw * gw), D = new Float32Array(gw * gw);
+      const gw = W < 769 ? 176 : 280, im = new ImageData(gw, gw), L = new Float32Array(gw * gw), D = new Float32Array(gw * gw);
       const ox = rnd() * 60, oy = rnd() * 60;
       for (let py = 0; py < gw; py++) for (let px = 0; px < gw; px++) {
         const u = px / gw - .5, v = py / gw - .5;
@@ -150,22 +136,22 @@
         const rift = Math.exp(-Math.pow((v - .004 * Math.sin(u * 14)) / (.011 + .01 * n), 2)) * (.55 + .45 * n) * (.4 + .8 * core);
         const lum = clamp((prof * (.4 + 1.1 * n) * (.5 + .9 * core) + haze * .14 * n) * (1 - .8 * dust) * (1 - .75 * Math.min(1, rift)), 0, 1.2);
         const l = Math.min(1, lum * 1.1), w = Math.min(1, core * lum * 1.5), i = (py * gw + px) * 4;
-        im.data[i] = 55 + 130 * l + 38 * w; im.data[i + 1] = 75 + 105 * l + 26 * w; im.data[i + 2] = 175 + 60 * l - 28 * w;
+        im.data[i] = 62 + 112 * l + 28 * w; im.data[i + 1] = 91 + 124 * l + 30 * w; im.data[i + 2] = 112 + 126 * l + 20 * w;
         im.data[i + 3] = Math.min(255, Math.pow(lum, 1.3) * 120); L[py * gw + px] = lum; D[py * gw + px] = dust;
       }
       const lo = document.createElement('canvas'); lo.width = lo.height = gw; lo.getContext('2d').putImageData(im, 0, 0);
-      const k = Math.min(dpr * .75, 2400 / S);
+      const k = Math.min(dpr * (W < 769 ? .52 : .7), (W < 769 ? 1250 : 1900) / S);
       band = document.createElement('canvas'); band.width = band.height = Math.ceil(S * k);
       const b = band.getContext('2d'); b.scale(k, k); b.translate(S / 2, S / 2); b.rotate(-.5);
       b.imageSmoothingQuality = 'high'; b.drawImage(lo, -S / 2, -S / 2, S, S);
-      const cols = ['225,232,255', '170,195,255', '255,225,190'];
-      for (let i = 0, n = 0; i < 26000 && n < 9000; i++) {
+      const cols = ['218,231,235', '160,195,205', '255,230,196'];
+      for (let i = 0, n = 0; i < 6500 && n < 2200; i++) {
         const u = rnd() - .5, v = gauss() * .09, gx = (u + .5) * gw | 0, gy = clamp(v + .5) * gw | 0, id = gy * gw + gx;
         if (rnd() > L[id] * .9 + .03 || rnd() < D[id] * .85) continue;
         n++; const a = .2 + rnd() * rnd() * .8, t = rnd(), s = .3 + rnd() * (rnd() < .03 ? 1.4 : .7);
         b.fillStyle = `rgba(${cols[t < .6 ? 0 : t < .85 ? 1 : 2]},${a})`; b.fillRect(u * S, v * S, s, s);
       }
-      stars = Array.from({ length: Math.min(200, W * H / 9500 | 0) }, () => ({
+      stars = Array.from({ length: Math.min(W < 769 ? 54 : 105, W * H / (W < 769 ? 26000 : 17000) | 0) }, () => ({
         x: rnd() * W, y: rnd() * H, r: .4 + rnd() * rnd() * 1.5, p: rnd() * 6.28, v: .6 + rnd() * 1.8,
         d: .2 + rnd() * .8, c: rnd() < .15 ? '255,225,190' : rnd() < .5 ? '190,205,255' : '255,255,255'
       }));
@@ -200,6 +186,9 @@
     function readScroll() { const h = root.scrollHeight - innerHeight; target = h > 0 ? scrollY / h : 0; kick(); }
     function loop(t) {
       raf = 0; if (document.hidden) return;
+      const frameGap = innerWidth < 769 ? 66 : 40;
+      if (isNight() && !reduced.matches && t - lastFrame < frameGap) { raf = requestAnimationFrame(loop); return; }
+      lastFrame = t;
       sp += (target - sp) * (reduced.matches ? 1 : .06);
       root.style.setProperty('--sp', sp.toFixed(4));
       if (isNight()) draw(t);

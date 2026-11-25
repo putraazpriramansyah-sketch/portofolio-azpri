@@ -352,3 +352,65 @@ body::-webkit-scrollbar {
     display: none !important;
     width: 0 !important;
 }
+
+/* Partisi reading experience */
+.partisi-container {max-width:920px;margin-inline:auto;padding:clamp(24px,5vw,64px) 20px 48px;}
+.partisi-heading {text-align:center;margin-bottom:28px;}
+.partisi-heading h1 {letter-spacing:-.04em;}
+.partisi-tabs {display:flex;gap:10px;justify-content:center;margin:0 auto 18px;position:relative;z-index:2;}
+.partisi-tab {min-width:130px;padding:13px 22px;border-radius:16px;color:var(--t-text);background:var(--g-bg);border:1px solid var(--g-rim);font:600 13px Poppins,sans-serif;cursor:pointer;transition:transform .25s ease,background .25s ease,border-color .25s ease;}
+.partisi-tab:hover {transform:translateY(-2px);}
+.partisi-tab.active {color:var(--t-head);background:var(--g-pill);border-color:var(--t-accent);box-shadow:0 8px 24px var(--g-shadow),inset 0 1px 0 var(--g-hi);}
+.partisi-content {padding:clamp(22px,4vw,42px);border-radius:26px;background:var(--t-card);color:var(--t-text);line-height:1.9;}
+.partisi-section[hidden] {display:none;}
+.partisi-section h2 {font-size:clamp(19px,3vw,26px);line-height:1.35;margin:0 0 22px;color:var(--t-head);}
+.partisi-section p {margin:0 0 18px;color:var(--t-muted);}
+.partisi-section p:last-child {margin-bottom:0;}
+.partisi-note {padding:20px;border-radius:18px;background:var(--g-bg);margin-top:26px;}
+#partisi-loader {position:fixed;inset:0;z-index:9999;display:grid;place-items:center;padding:20px;background:var(--t-loader);transition:opacity .4s ease,visibility .4s ease;}
+#partisi-loader.fade-out {opacity:0;visibility:hidden;pointer-events:none;}
+.material-loader-card {width:min(420px,100%);padding:32px;border:1px solid var(--g-rim);border-radius:28px;background:var(--g-bg);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);text-align:center;box-shadow:0 24px 80px var(--g-shadow),inset 0 1px 0 var(--g-hi);}
+.loader-badge {width:62px;height:62px;display:grid;place-items:center;margin:0 auto 18px;border-radius:20px;color:var(--t-accent);background:var(--g-pill);font-size:25px;box-shadow:0 8px 28px var(--g-shadow);}
+.loader-progress {height:5px;margin:24px 0 12px;border-radius:99px;background:var(--g-lo);overflow:hidden;}
+.loader-progress-fill {width:0;height:100%;border-radius:inherit;background:var(--t-btn);transition:width .35s ease;box-shadow:0 0 15px var(--t-accent);}
+.loader-meta {display:flex;justify-content:center;align-items:center;gap:10px;color:var(--t-muted);font-size:11px;}
+.loader-dot {width:5px;height:5px;border-radius:50%;background:var(--t-accent);}
+@media(max-width:600px){.partisi-container{padding-inline:14px}.partisi-tabs{gap:8px}.partisi-tab{flex:1;min-width:0;padding:12px 10px}.partisi-content{padding:22px 18px;border-radius:20px}.material-loader-card{padding:26px 20px}}
+
+
+/* ===== PARTISI: TWO DISTINCT ENTRY CARDS + READING VIEW ===== */
+.partisi-container{max-width:1050px!important;padding-top:clamp(36px,7vh,82px)!important;}
+.partisi-heading{margin-bottom:30px!important;}
+.partisi-heading h1{font-size:clamp(32px,5vw,54px)!important;letter-spacing:-.055em!important;}
+.partisi-content.partisi-reader{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
+.partisi-chooser{max-width:900px;margin:0 auto;padding:clamp(24px,4vw,42px);border:1px solid var(--g-rim);border-radius:30px;background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.025));box-shadow:0 22px 65px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.13);}
+.chooser-kicker{font-size:10px;letter-spacing:.24em;font-weight:700;color:var(--t-accent);margin-bottom:12px;}
+.partisi-chooser>h2{font-size:clamp(23px,3vw,32px);letter-spacing:-.035em;color:var(--t-head);margin:0 0 8px;}
+.partisi-chooser>p{font-size:13px;color:var(--t-muted);margin:0 0 26px;}
+.partisi-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;}
+.partisi-option{position:relative;display:flex;align-items:flex-start;gap:18px;min-height:190px;padding:25px;text-align:left;color:var(--t-text);border:1px solid var(--g-rim);border-radius:23px;background:linear-gradient(145deg,rgba(255,255,255,.105),rgba(255,255,255,.035));box-shadow:inset 0 1px 0 rgba(255,255,255,.12);cursor:pointer;transition:transform .28s ease,border-color .28s ease,background .28s ease;}
+.partisi-option:hover{transform:translateY(-4px);border-color:var(--t-accent);background:linear-gradient(145deg,rgba(255,255,255,.15),rgba(255,255,255,.045));}
+.partisi-option:active{transform:scale(.985);}
+.option-index{display:grid;place-items:center;flex:0 0 48px;width:48px;height:48px;border-radius:15px;background:var(--g-pill);color:var(--t-head);font-size:13px;font-weight:700;}
+.option-copy{display:flex;flex-direction:column;gap:9px;min-width:0;padding-top:2px;}
+.option-copy strong{font-size:17px;color:var(--t-head);}
+.option-copy small{font-size:12px;line-height:1.7;color:var(--t-muted);}
+.option-copy em{font-size:11px;font-style:normal;font-weight:600;color:var(--t-accent);margin-top:12px;}
+.option-copy em span{font-size:15px;margin-left:5px;}
+.option-arrow{position:absolute;right:22px;top:22px;font-size:18px;color:var(--t-muted);transition:transform .25s ease;}
+.partisi-option:hover .option-arrow{transform:translate(3px,-3px);color:var(--t-accent);}
+.partisi-reader-back{display:none;align-items:center;gap:9px;margin:0 0 18px;padding:11px 16px;border:1px solid var(--g-rim);border-radius:999px;background:var(--g-bg);color:var(--t-text);font:600 12px Poppins,sans-serif;cursor:pointer;}
+.partisi-reader.is-reading .partisi-reader-back{display:inline-flex;}
+.partisi-section{padding:clamp(24px,5vw,48px);border:1px solid var(--g-rim);border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.025));box-shadow:0 20px 55px rgba(0,0,0,.13),inset 0 1px 0 rgba(255,255,255,.12);color:var(--t-text);line-height:1.95;animation:partisiEnter .42s ease both;}
+.partisi-section[hidden],.partisi-chooser[hidden]{display:none!important;}
+.partisi-section h2{font-size:clamp(21px,3vw,29px)!important;margin:0 0 25px!important;line-height:1.4!important;}
+.partisi-section p{font-size:14px!important;line-height:1.95!important;margin-bottom:20px!important;color:var(--t-muted)!important;}
+.partisi-section .partisi-note{border:1px solid var(--g-rim);background:rgba(255,255,255,.045);}
+@keyframes partisiEnter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+/* A calmer, longer loader; keep expensive blur off low-power phones. */
+#partisi-loader{transition:opacity .65s ease,visibility .65s ease!important;}
+.material-loader-card{animation:none!important;background:rgba(12,18,30,.88)!important;border-color:rgba(255,255,255,.16)!important;backdrop-filter:blur(12px)!important;-webkit-backdrop-filter:blur(12px)!important;}
+.loader-badge{border-radius:50%!important;background:rgba(255,255,255,.09)!important;color:#d8e3ef!important;box-shadow:none!important;}
+.loader-progress-fill{background:linear-gradient(90deg,#8da9c4,#e2eaf0)!important;box-shadow:none!important;}
+@media(max-width:680px){.partisi-chooser{padding:23px 17px;border-radius:23px}.partisi-options{grid-template-columns:1fr;gap:12px}.partisi-option{min-height:145px;padding:20px;border-radius:19px}.partisi-section{padding:25px 19px;border-radius:21px}.partisi-section p{font-size:13px!important}.material-loader-card{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}}
+@media(prefers-reduced-motion:reduce){.partisi-option,.partisi-section{animation:none!important;transition:none!important}}
