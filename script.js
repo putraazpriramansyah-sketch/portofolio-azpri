@@ -1,6 +1,6 @@
-/* ===== LOADER V4.4 =====
-   Kata muncul bertahap, huruf judul masuk satu per satu, progres halus yang mengikuti pemuatan halaman asli.
-   Hero baru mulai beranimasi saat tirai loader naik (event "gf:ready"). */
+/* ===== LOADER V4.4b (gaya ekizr.com) =====
+   Ikon -> "Welcome To My" -> "Portfolio Website" kata per kata -> pill dengan efek ketik. Menunggu halaman benar-benar selesai dimuat.
+   Event "gf:ready" dikirim saat loader mulai keluar (dipakai bubble hint partisi). */
 
 let skipWelcome = false;
 try {
@@ -31,77 +31,43 @@ if (skipWelcome || !loaderEl) {
 } else {
     document.body.classList.add("loading");
 
-    const title = loaderEl.querySelector(".ld-title");
-    if (title) {
-        const words = title.textContent.trim().split(/\s+/);
-        let index = 0;
-        title.textContent = "";
-        words.forEach((word, w) => {
-            const wordEl = document.createElement("span");
-            wordEl.className = "ld-word";           // satu kata tidak terpotong; baris baru hanya di antara kata
-            wordEl.setAttribute("aria-hidden", "true");
-            [...word].forEach(ch => {
-                const span = document.createElement("span");
-                span.className = "ld-ch";
-                span.style.setProperty("--i", index++);
-                span.textContent = ch;
-                wordEl.appendChild(span);
-            });
-            title.appendChild(wordEl);
-            if (w < words.length - 1) { title.appendChild(document.createTextNode(" ")); index++; }
-        });
-        // animasi huruf dari tengah ke luar (simetris): --d = jarak huruf ke titik tengah judul
-        const chars = title.querySelectorAll(".ld-ch");
-        const mid = (index - 1) / 2;
-        chars.forEach(el => el.style.setProperty("--d", Math.abs(Number(el.style.getPropertyValue("--i")) - mid).toFixed(1)));
-    }
-
-    const fill = loaderEl.querySelector(".ld-fill");
-    const pctEl = document.getElementById("ld-pct");
-    const MIN_TIME = reducedMotionPref ? 500 : 1900;   // loader minimal tampil (ms)
+    const typeEl = document.getElementById("ld-type");
+    const MIN_TIME = reducedMotionPref ? 600 : 2800;   // loader minimal tampil (ms)
     const MAX_TIME = 6500;                              // batas aman jika ada resource macet
-    const t0 = performance.now();
     let pageLoaded = document.readyState === "complete";
-    let shown = 0, last = t0, closing = false;
+    let minDone = false, closing = false;
 
-    if (!pageLoaded) window.addEventListener("load", () => { pageLoaded = true; }, { once: true });
-
-    function paint(value) {
-        if (fill) fill.style.transform = `scaleX(${(value / 100).toFixed(4)})`;
-        if (pctEl) pctEl.textContent = Math.round(value);
+    // efek ketik pada pill (seperti ekizr.com): mulai saat kata-kata sudah muncul
+    if (typeEl) {
+        const full = typeEl.dataset.text || "";
+        if (reducedMotionPref) {
+            typeEl.textContent = full;
+        } else {
+            setTimeout(() => {
+                let i = 0;
+                const timer = setInterval(() => {
+                    typeEl.textContent = full.slice(0, ++i);
+                    if (i >= full.length) clearInterval(timer);
+                }, 90);
+            }, 1200);
+        }
     }
 
     function closeLoader() {
         if (closing) return;
         closing = true;
-        paint(100);
-        setTimeout(() => {
-            loaderEl.classList.add("fade-out");
-            setTimeout(gfFinishLoading, 180);
-            setTimeout(() => { loaderEl.style.display = "none"; gfFinishLoading(); }, 900);
-        }, reducedMotionPref ? 60 : 280);
+        loaderEl.classList.add("fade-out");
+        setTimeout(gfFinishLoading, 180);
+        setTimeout(() => { loaderEl.style.display = "none"; gfFinishLoading(); }, 950);
     }
 
-    function tick(now) {
-        if (closing) return;
-        const elapsed = now - t0;
-        const dt = Math.min(now - last, 100);
-        last = now;
-
-        // Sebelum halaman selesai: naik cepat lalu melambat (maks ~86%). Sesudahnya: lanjut ke 100%, tapi tidak lebih cepat dari waktu minimal.
-        const realCap = pageLoaded || elapsed > MAX_TIME ? 100 : 86 * (1 - Math.exp(-elapsed / 1100));
-        const timeCap = 100 * Math.min(1, elapsed / MIN_TIME);
-        const goal = Math.min(realCap, timeCap);
-
-        shown += (goal - shown) * (1 - Math.exp(-dt / 140));
-        paint(shown);
-
-        if (shown >= 99.4 && goal >= 100) closeLoader();
-        else requestAnimationFrame(tick);
+    function tryClose() {
+        if (minDone && pageLoaded) closeLoader();
     }
 
-    requestAnimationFrame(tick);
-    setTimeout(closeLoader, MAX_TIME + 1500);   // jaring pengaman (mis. tab di background membuat rAF berhenti)
+    if (!pageLoaded) window.addEventListener("load", () => { pageLoaded = true; tryClose(); }, { once: true });
+    setTimeout(() => { minDone = true; tryClose(); }, MIN_TIME);
+    setTimeout(closeLoader, MAX_TIME);   // jaring pengaman: resource macet / tab di background
 }
 
 /* ===== TYPING EFFECT ===== */

@@ -28,14 +28,22 @@
     <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
 <symbol id="gi-center" viewBox="0 0 120 40"><g fill="currentColor"><path d="M60 3 L63.4 16.6 L77 20 L63.4 23.4 L60 37 L56.6 23.4 L43 20 L56.6 16.6Z"/><path d="M42 20 C37 14.5 31 12.5 21 13.5 C27 15.8 29.5 18 30.5 20 C29.5 22 27 24.2 21 26.5 C31 27.5 37 25.5 42 20Z" opacity=".9"/><path d="M78 20 C83 14.5 89 12.5 99 13.5 C93 15.8 90.5 18 89.5 20 C90.5 22 93 24.2 99 26.5 C89 27.5 83 25.5 78 20Z" opacity=".9"/><circle cx="14" cy="20" r="2"/><circle cx="106" cy="20" r="2"/></g><g fill="none" stroke="currentColor" stroke-width="1"><path d="M60 9 L71 20 L60 31 L49 20Z" opacity=".75"/><path d="M7 20H3M117 20H113" opacity=".6"/></g></symbol></defs></svg>
     <div class="sky" aria-hidden="true"><div class="sky-layer sky-light"></div><div class="sky-layer sky-sunset"><i class="sun"></i></div><div class="sky-clouds"></div><canvas id="sky-night"></canvas></div>
-    <!-- LOADER (V4.4): kata muncul bertahap + progres halus -->
+    <!-- LOADER (V4.4b): gaya WelcomeScreen ekizr.com -> ikon, "Welcome To My / Portfolio Website" kata per kata, pill ketik -->
     <div id="loader" role="status" aria-live="polite" aria-label="Memuat website">
+        <div class="ld-glow" aria-hidden="true"></div>
         <div class="loader-content">
-            <svg class="ld-emblem" viewBox="0 0 120 40" aria-hidden="true"><use href="#gi-center"/></svg>
-            <p class="ld-words" aria-hidden="true"><span>Welcome</span><span>to</span><span>my</span></p>
-            <h1 class="ld-title" aria-label="Portfolio Website">Portfolio Website</h1>
-            <div class="ld-track" aria-hidden="true"><i class="ld-fill"></i></div>
-            <p class="ld-meta" aria-hidden="true"><span class="ld-brand">GuideFs</span><i class="ld-dot"></i><span class="ld-pct"><b id="ld-pct">0</b>%</span></p>
+            <div class="ld-icons" aria-hidden="true">
+                <span class="ld-icon" style="--n:0"><i class="fa-solid fa-code"></i></span>
+                <span class="ld-icon" style="--n:1"><i class="fa-solid fa-user"></i></span>
+                <span class="ld-icon" style="--n:2"><i class="fa-solid fa-moon"></i></span>
+            </div>
+            <h1 class="ld-heading" aria-label="Welcome To My Portfolio Website">
+                <span class="ld-line" aria-hidden="true"><span class="ld-w ld-r" style="--n:1">Welcome</span> <span class="ld-w ld-r" style="--n:2">To</span> <span class="ld-w ld-r" style="--n:3">My</span></span>
+                <span class="ld-line ld-line2" aria-hidden="true"><span class="ld-w ld-u" style="--n:4">Portfolio</span> <span class="ld-w ld-u" style="--n:5">Website</span></span>
+            </h1>
+            <div class="ld-link" aria-hidden="true">
+                <span class="ld-pill"><i class="fa-solid fa-globe"></i><span class="ld-type" id="ld-type" data-text="Guide Official"></span><b class="ld-caret">|</b></span>
+            </div>
         </div>
     </div>
 

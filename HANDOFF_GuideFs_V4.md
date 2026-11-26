@@ -105,13 +105,12 @@ Diuji: Chromium headless (390px & 1280px, 3 tema) + simulasi event touch untuk s
 Sisa ide dari V4.3 (loader modern + buang `.planet-*`/`.cloud`) SUDAH dikerjakan di V4.4 (lihat 9d).
 
 ## 9d. Perubahan V4.4 — blok "GUIDEFs V4.4" di paling bawah `theme.css` + perubahan di script.js / theme.js / partisi.js / HTML
-1. **Loader modern** (`#loader` di index.html, logika di awal `script.js`): emblem emas (`#gi-center`) muncul, kata "Welcome / to / my" bertahap,
-   judul "Portfolio Website" masuk huruf per huruf DARI TENGAH KE LUAR (simetris; `--d` = jarak huruf ke tengah) (JS memecah jadi `.ld-word > .ld-ch`, kata tidak terpotong di HP), progres halus (`transform: scaleX`, bukan width)
-   yang mengikuti pemuatan halaman nyata: naik cepat lalu melambat (maks ~86%) sampai event `load`, lalu ke 100%.
-   Minimal tampil 1.9 dtk, batas aman 6.5 dtk (+jaring pengaman timer). Keluar sebagai tirai naik dengan sisi bawah melengkung. Semua elemen rata tengah (terukur offset <1px): `text-indent` mengimbangi letter-spacing, progres tumbuh dari tengah, "GUIDEFS · 89%" satu baris di tengah.
-   Catatan: pemilik minta gaya loader ala ekizr.com, tapi situsnya dirender JS sehingga loader-nya tidak bisa dibaca dari sesi ini — minta screenshot/deskripsi kalau mau disamakan.
-   Warna ikut tema lewat `--t-loader`, `--t-accent`, `--t-head`. `prefers-reduced-motion` -> tanpa animasi, tampil 0.5 dtk.
-   Class lama `.anim-sub/.anim-title/.loading-bar/.fade-right*` tidak dipakai lagi (rule-nya masih di style.css, aman dibiarkan).
+1. **Loader gaya ekizr.com (V4.4b)** (`#loader` di index.html, logika di awal `script.js`, style di blok V4.4 `theme.css`).
+   Strukturnya meniru `WelcomeScreen.jsx` di repo publik EkiZR/Portofolio_V5 (3 ikon bulat -> "Welcome To My" kata per kata fade-right -> "Portfolio Website" kata per kata fade-up
+   -> pill dengan efek ketik + kursor berkedip; latar glow berdenyut; keluar dengan zoom 1.1 + blur 10px + isi naik 20px berurutan; blur dimatikan di HP karena berat).
+   Beda dari ekizr: warna ikut tema (`--t-head`/`--t-accent`/`--t-accent2`, BUKAN indigo-ungu), ikon Font Awesome (code, user, moon), teks ketik "Guide Official" (ubah di `data-text` pada `#ld-type`).
+   Timing: tampil minimal 2.8 dtk dan menunggu event `load` (batas aman 6.5 dtk); reduced-motion -> 0.6 dtk tanpa animasi. Semua rata tengah.
+   Loader versi emblem emas + progres % (V4.4a) sudah diganti; bisa dibuat lagi bila diminta.
 2. **Teks hero TIDAK diubah** (permintaan pemilik, revisi V4.4b): delay `.fadeup*` (2.69s-3.01s) dan typing effect kembali persis seperti aslinya (typing mulai langsung).
    Yang tersisa dari V4.4 hanya helper `gfReady(cb)` + event `gf:ready` (dipakai bubble hint partisi) dan `body.loading{overflow:hidden}`.
 3. **Rapihin theme.css:** 49 rule mati dibuang (`.planet-*`, `.cloud*`, `.sky-day`, `.hero-logo-badge`, `.tech-badge`, `.section-divider`, `.partisi-tab` dll) +
