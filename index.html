@@ -1,30 +1,45 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GuideFs Official | Portfolio</title>
+    <meta name="description" content="Portofolio Putra Azpriramansyah (Azpri / GuideFs): mahasiswa S1 Sistem Informasi Universitas Tanjungpura, web development, astrophotography, dan Mobile Legends.">
+    <meta name="author" content="Putra Azpriramansyah">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="GuideFs Official | Portfolio">
+    <meta property="og:description" content="Beginner developer, mahasiswa Sistem Informasi, dan astrophotographer. Lihat sertifikat, tech stack, dan galeri langit malam.">
+    <meta name="twitter:card" content="summary">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23050d17'/%3E%3Cpath d='M32 9l5.2 18.8L56 32l-18.8 5.2L32 56l-5.2-18.8L8 32l18.8-5.2z' fill='%23d7c69b'/%3E%3C/svg%3E">
 
     <script>try{var t=localStorage.getItem("gf-theme")||"night";document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme="night"}</script>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="theme.css">
+    <meta name="theme-color" content="#050d17">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=7">
+    <link rel="stylesheet" href="theme.css?v=7">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <noscript><style>#loader{display:none!important}body.loading{overflow:auto!important}[data-aos]{opacity:1!important;transform:none!important}</style></noscript>
 </head>
 
 <body>
-    <div class="sky" aria-hidden="true"><div class="sky-day"></div><canvas id="sky-night"></canvas></div>
-    <!-- LOADER -->
-    <div id="loader">
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="gi-center" viewBox="0 0 120 40"><g fill="currentColor"><path d="M60 3 L63.4 16.6 L77 20 L63.4 23.4 L60 37 L56.6 23.4 L43 20 L56.6 16.6Z"/><path d="M42 20 C37 14.5 31 12.5 21 13.5 C27 15.8 29.5 18 30.5 20 C29.5 22 27 24.2 21 26.5 C31 27.5 37 25.5 42 20Z" opacity=".9"/><path d="M78 20 C83 14.5 89 12.5 99 13.5 C93 15.8 90.5 18 89.5 20 C90.5 22 93 24.2 99 26.5 C89 27.5 83 25.5 78 20Z" opacity=".9"/><circle cx="14" cy="20" r="2"/><circle cx="106" cy="20" r="2"/></g><g fill="none" stroke="currentColor" stroke-width="1"><path d="M60 9 L71 20 L60 31 L49 20Z" opacity=".75"/><path d="M7 20H3M117 20H113" opacity=".6"/></g></symbol></defs></svg>
+    <div class="sky" aria-hidden="true"><div class="sky-layer sky-light"></div><div class="sky-layer sky-sunset"><i class="sun"></i></div><div class="sky-clouds"></div><canvas id="sky-night"></canvas></div>
+    <!-- LOADER (V4.4): kata muncul bertahap + progres halus -->
+    <div id="loader" role="status" aria-live="polite" aria-label="Memuat website">
         <div class="loader-content">
-            <p class="anim-sub fade-right">Welcome</p>
-            <p class="anim-sub fade-right1">To</p>
-            <p class="anim-sub fade-right2">My</p>
-            <h1 class="anim-title fadeup-leader">Portfolio Website</h1>
-            <div class="loading-bar"></div>
+            <svg class="ld-emblem" viewBox="0 0 120 40" aria-hidden="true"><use href="#gi-center"/></svg>
+            <p class="ld-words" aria-hidden="true"><span>Welcome</span><span>to</span><span>my</span></p>
+            <h1 class="ld-title" aria-label="Portfolio Website">Portfolio Website</h1>
+            <div class="ld-track" aria-hidden="true"><i class="ld-fill"></i></div>
+            <p class="ld-meta" aria-hidden="true"><span class="ld-brand">GuideFs</span><i class="ld-dot"></i><span class="ld-pct"><b id="ld-pct">0</b>%</span></p>
         </div>
     </div>
+
+    <a class="skip-link" href="#about">Lewati ke konten</a>
 
     <!-- LIQUID GLASS NAVBAR -->
     <header class="navbar">
@@ -39,6 +54,7 @@
     </nav>
     <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Ganti mode"><span class="theme-symbol" aria-hidden="true">☾</span></button>
 </header>
+    <div class="scroll-progress" aria-hidden="true"><i></i></div>
     <main>
         <!-- HOME: DESAIN AWAL DIPERTAHANKAN -->
         <section class="hero" id="home">
@@ -80,7 +96,7 @@
 
         </section>
 
-        <div class="section-divider"></div>
+        <div class="gi-divider" aria-hidden="true"><span class="gi-line"></span><svg class="gi-emblem" viewBox="0 0 120 40"><use href="#gi-center"/></svg><span class="gi-line flip"></span><span class="gi-label">I · About Me</span></div>
 
         <!-- ABOUT ME: ISI UTAMA DIPERTAHANKAN -->
 <!-- ABOUT ME -->
@@ -118,6 +134,7 @@
 </section>
 
 <!-- EDUCATION: BAGIAN TERPISAH -->
+<div class="gi-divider" aria-hidden="true"><span class="gi-line"></span><svg class="gi-emblem" viewBox="0 0 120 40"><use href="#gi-center"/></svg><span class="gi-line flip"></span><span class="gi-label">II · Journey</span></div>
 <section class="education-section" id="education">
     <div class="education" data-aos="fade-up">
         <div class="education-header">
@@ -189,6 +206,7 @@
         <!-- INTERESTS / HOBI -->
         
 <!-- INTERESTS / HOBI -->
+        <div class="gi-divider" aria-hidden="true"><span class="gi-line"></span><svg class="gi-emblem" viewBox="0 0 120 40"><use href="#gi-center"/></svg><span class="gi-line flip"></span><span class="gi-label">III · Interests</span></div>
         <section class="hobbies" id="hobbies">
             <div class="section-container" data-aos="fade-up">
                 <p class="section-label">BEYOND THE SCREEN</p>
@@ -220,27 +238,27 @@
 
                 <div class="astro-track" id="astro-track">
                     <div class="astro-card">
-                        <img src="Photo/WhatsApp Image 2026-10-26 at 12.57.00 (2).jpeg" alt="Astrophotography 1" loading="lazy">
+                        <img src="Photo/WhatsApp Image 2026-10-26 at 12.57.00 (2).jpeg" alt="Astrophotography 1" loading="lazy" decoding="async">
                         <span>01 / MILKYWAY</span>
                     </div>
                     <div class="astro-card">
-                        <img src="Photo/WhatsApp Image 2026-10-26 at 12.57.00.jpeg" alt="Astrophotography 2" loading="lazy">
+                        <img src="Photo/WhatsApp Image 2026-10-26 at 12.57.00.jpeg" alt="Astrophotography 2" loading="lazy" decoding="async">
                         <span>02 / NIGHT SKY</span>
                     </div>
                     <div class="astro-card">
-                        <img src="Photo/WhatsApp Image 2026-10-26 at 12.56.59 (1).jpeg" alt="Astrophotography 3" loading="lazy">
+                        <img src="Photo/WhatsApp Image 2026-10-26 at 12.56.59 (1).jpeg" alt="Astrophotography 3" loading="lazy" decoding="async">
                         <span>03 / NIGHT SKY</span>
                     </div>
                     <div class="astro-card">
-                        <img src="Photo/WhatsApp Image 2026-10-26 at 12.57.00 (1).jpeg" alt="Astrophotography 4" loading="lazy">
+                        <img src="Photo/WhatsApp Image 2026-10-26 at 12.57.00 (1).jpeg" alt="Astrophotography 4" loading="lazy" decoding="async">
                         <span>04 / NIGHT SKY</span>
                     </div>
                     <div class="astro-card">
-                        <img src="Photo/WhatsApp Image 2026-10-26 at 13.02.52.jpeg" alt="Astrophotography 5" loading="lazy">
+                        <img src="Photo/WhatsApp Image 2026-10-26 at 13.02.52.jpeg" alt="Astrophotography 5" loading="lazy" decoding="async">
                         <span>05 / NIGHT SKY</span>
                     </div>
                     <div class="astro-card">
-                        <img src="Photo/WhatsApp Image 2026-10-26 at 12.56.59.jpeg" alt="Astrophotography 6" loading="lazy">
+                        <img src="Photo/WhatsApp Image 2026-10-26 at 12.56.59.jpeg" alt="Astrophotography 6" loading="lazy" decoding="async">
                         <span>JAN DIBACA MAH</span>
                     </div>
                 </div>
@@ -270,19 +288,19 @@
 
     <div class="astro-track" id="ml-track">
         <div class="astro-card">
-            <img src="Photo/imo.jpeg" alt="Mobile Legends 1" loading="lazy">
+            <img src="Photo/imo.jpeg" alt="Mobile Legends 1" loading="lazy" decoding="async">
             <span>IMO hanyalah angka</span>
         </div>
         <div class="astro-card">
-            <img src="Photo/friend imo.jpeg" alt="Mobile Legends 2" loading="lazy">
+            <img src="Photo/friend imo.jpeg" alt="Mobile Legends 2" loading="lazy" decoding="async">
             <span>TIM RENDI GANTENG</span>
         </div>
         <div class="astro-card">
-            <img src="Photo/friend imo2.jpeg" alt="Mobile Legends 3" loading="lazy">
+            <img src="Photo/friend imo2.jpeg" alt="Mobile Legends 3" loading="lazy" decoding="async">
             <span>CLASSMEET ERA</span>
         </div>
         <div class="astro-card">
-            <img src="Photo/fnny.jpeg" alt="Mobile Legends 4" loading="lazy">
+            <img src="Photo/fnny.jpeg" alt="Mobile Legends 4" loading="lazy" decoding="async">
             <span>FANNY BUNTAU</span>
         </div>
     </div>
@@ -293,7 +311,7 @@
 </section>
 
 
-        <div class="section-divider"></div>
+        <div class="gi-divider" aria-hidden="true"><span class="gi-line"></span><svg class="gi-emblem" viewBox="0 0 120 40"><use href="#gi-center"/></svg><span class="gi-line flip"></span><span class="gi-label">IV · Portfolio</span></div>
 
         <!-- PORTFOLIO / PRESTASI -->
        
@@ -307,7 +325,7 @@
                 </p>
 
                 <!-- TAB SWITCHER (EKIZR STYLE - PROJECTS DI AKHIR) -->
-                <div class="portfolio-tabs" data-aos="fade-up" data-aos-delay="100">
+                <div class="portfolio-tabs" role="tablist" data-aos="fade-up" data-aos-delay="100">
                     <button class="portfolio-tab-btn active" data-tab="certificates" type="button">
                         <i class="fa-solid fa-award"></i> Certificates
                     </button>
@@ -327,7 +345,7 @@
                             <div class="achievement-image">
                                 <img src="Photo/WhatsApp Image 2026-10-26 at 12.36.44.jpeg"
                                     alt="Penghargaan mengetik 10 jari tingkat kota"
-                                    loading="lazy">
+                                    loading="lazy" decoding="async">
                                 <span class="achievement-level">CITY LEVEL</span>
                             </div>
 
@@ -344,7 +362,7 @@
                             <div class="achievement-image">
                                 <img src="Photo/WhatsApp Image 2026-10-26 at 12.36.43.jpeg"
                                     alt="Penghargaan mengetik 10 jari tingkat nasional"
-                                    loading="lazy">
+                                    loading="lazy" decoding="async">
                                 <span class="achievement-level">NATIONAL LEVEL</span>
                             </div>
 
@@ -362,7 +380,7 @@
                                 <img src="Photo/classmeet.jpeg"
                                     alt="Prestasi juara classmeet"
                                     class="classmeet-photo"
-                                    loading="lazy"
+                                    loading="lazy" decoding="async"
                                     role="button"
                                     tabindex="0"
                                     aria-label="Perbesar foto prestasi classmeet">
@@ -458,7 +476,7 @@
             </div>
         </section>
 
-        <div class="section-divider"></div>
+        <div class="gi-divider" aria-hidden="true"><span class="gi-line"></span><svg class="gi-emblem" viewBox="0 0 120 40"><use href="#gi-center"/></svg><span class="gi-line flip"></span><span class="gi-label">V · Contact</span></div>
 
         <!-- CONTACT -->
         <section class="contact" id="contact">
@@ -668,7 +686,7 @@
 
     <!-- SUPABASE -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="script.js"></script>
-    <script src="theme.js"></script>
+    <script src="script.js?v=7"></script>
+    <script src="theme.js?v=7" defer></script>
 </body>
 </html>

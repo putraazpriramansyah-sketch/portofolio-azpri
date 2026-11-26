@@ -1,5 +1,5 @@
 ﻿
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+/* font dimuat lewat <link> di HTML (lebih cepat dari @import) */
 
 * {
     margin: 0;
@@ -1661,7 +1661,7 @@ body::before {
 
 /* ===== GUIDEFs ΓÇö NEON PURPLE MLBB THEME ===== */
 
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+/* font dimuat lewat <link> di HTML (lebih cepat dari @import) */
 
 :root {
     --bg: #080510;

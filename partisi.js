@@ -1,4 +1,4 @@
-/* GuideFs Partisi — pilihan terpisah, transisi ringan, loader minimum 2 detik */
+/* GuideFs Partisi V4.4 — pilihan terpisah, estimasi waktu baca, transisi ringan, loader minimum 2 detik */
 document.addEventListener('DOMContentLoaded', () => {
   const article = document.querySelector('.partisi-content');
   const heading = document.querySelector('.partisi-heading');
@@ -25,9 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
     chooser.innerHTML = `<div class="chooser-kicker">PILIH MATERI</div><h2>Mulai dari bagian mana?</h2><p>Buka setiap rangkuman secara terpisah agar lebih nyaman dibaca.</p><div class="partisi-options"></div>`;
     const options = chooser.querySelector('.partisi-options');
     sections.forEach((section, i) => {
+      const words = (section.textContent || '').trim().split(/\s+/).length;
+      section.dataset.minutes = String(Math.max(1, Math.round(words / 200)));
       const card = document.createElement('button');
       card.type = 'button'; card.className = 'partisi-option';
-      card.innerHTML = `<span class="option-index">0${i+1}</span><span class="option-copy"><strong>Partisi ${i+1}</strong><small>${section.dataset.title}</small><em>Buka materi <span aria-hidden="true">↗</span></em></span><span class="option-arrow" aria-hidden="true">→</span>`;
+      card.innerHTML = `<span class="option-index">0${i+1}</span><span class="option-copy"><strong>Partisi ${i+1}</strong><small>${section.dataset.title}</small><span class="option-meta">± ${section.dataset.minutes} menit baca</span><em>Buka materi <span aria-hidden="true">↗</span></em></span><span class="option-arrow" aria-hidden="true">→</span>`;
       card.addEventListener('click', () => {
         chooser.hidden = true;
         sections.forEach(s => { s.hidden = true; });
@@ -55,10 +57,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const percent = document.getElementById('loader-percent');
   const bar = document.querySelector('.loader-progress-fill');
   const start = performance.now();
-  let loaded = false;
+  let loaded = false, progressTimer = 0;
   const finish = () => {
-    if (loaded) return; loaded = true;
-    const wait = Math.max(0, 2100 - (performance.now() - start));
+    if (loaded) return; loaded = true; clearInterval(progressTimer);
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const wait = Math.max(0, (reduce ? 500 : 2100) - (performance.now() - start));
     if (status) status.textContent = 'Menyiapkan ruang baca...';
     if (percent) percent.textContent = '100%';
     if (bar) bar.style.width = '100%';
@@ -69,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, wait);
   };
   let progress = 0;
-  const progressTimer = setInterval(() => {
+  progressTimer = setInterval(() => {
     progress = Math.min(92, progress + 4 + Math.random() * 8);
     if (percent) percent.textContent = `${Math.round(progress)}%`;
     if (bar) bar.style.width = `${progress}%`;

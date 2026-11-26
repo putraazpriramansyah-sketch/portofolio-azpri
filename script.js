@@ -1,41 +1,110 @@
+/* ===== LOADER V4.4 =====
+   Kata muncul bertahap, huruf judul masuk satu per satu, progres halus yang mengikuti pemuatan halaman asli.
+   Hero baru mulai beranimasi saat tirai loader naik (event "gf:ready"). */
 
-/* ===== LOADER ===== */
+let skipWelcome = false;
+try {
+    skipWelcome = sessionStorage.getItem("skipWelcome") === "1";
+    if (skipWelcome) sessionStorage.removeItem("skipWelcome");
+} catch (e) {}
 
-const skipWelcome = sessionStorage.getItem("skipWelcome") === "1";
+const loaderEl = document.getElementById("loader");
+const reducedMotionPref = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-if (skipWelcome) {
-    sessionStorage.removeItem("skipWelcome");
-
-    const loader = document.getElementById("loader");
-
-    if (loader) {
-        loader.style.display = "none";
+function gfReady(callback) {
+    if (document.body.classList.contains("loading")) {
+        window.addEventListener("gf:ready", callback, { once: true });
+    } else {
+        callback();
     }
+}
 
+function gfFinishLoading() {
+    if (!document.body.classList.contains("loading")) return;
     document.body.classList.remove("loading");
+    window.dispatchEvent(new Event("gf:ready"));
+}
 
+if (skipWelcome || !loaderEl) {
+    if (loaderEl) loaderEl.style.display = "none";
+    document.body.classList.remove("loading");
 } else {
     document.body.classList.add("loading");
 
-    window.addEventListener("load", () => {
-        const loader = document.getElementById("loader");
+    const title = loaderEl.querySelector(".ld-title");
+    if (title) {
+        const words = title.textContent.trim().split(/\s+/);
+        let index = 0;
+        title.textContent = "";
+        words.forEach((word, w) => {
+            const wordEl = document.createElement("span");
+            wordEl.className = "ld-word";           // satu kata tidak terpotong; baris baru hanya di antara kata
+            wordEl.setAttribute("aria-hidden", "true");
+            [...word].forEach(ch => {
+                const span = document.createElement("span");
+                span.className = "ld-ch";
+                span.style.setProperty("--i", index++);
+                span.textContent = ch;
+                wordEl.appendChild(span);
+            });
+            title.appendChild(wordEl);
+            if (w < words.length - 1) { title.appendChild(document.createTextNode(" ")); index++; }
+        });
+        // animasi huruf dari tengah ke luar (simetris): --d = jarak huruf ke titik tengah judul
+        const chars = title.querySelectorAll(".ld-ch");
+        const mid = (index - 1) / 2;
+        chars.forEach(el => el.style.setProperty("--d", Math.abs(Number(el.style.getPropertyValue("--i")) - mid).toFixed(1)));
+    }
 
-        if (!loader) return;
+    const fill = loaderEl.querySelector(".ld-fill");
+    const pctEl = document.getElementById("ld-pct");
+    const MIN_TIME = reducedMotionPref ? 500 : 1900;   // loader minimal tampil (ms)
+    const MAX_TIME = 6500;                              // batas aman jika ada resource macet
+    const t0 = performance.now();
+    let pageLoaded = document.readyState === "complete";
+    let shown = 0, last = t0, closing = false;
 
+    if (!pageLoaded) window.addEventListener("load", () => { pageLoaded = true; }, { once: true });
+
+    function paint(value) {
+        if (fill) fill.style.transform = `scaleX(${(value / 100).toFixed(4)})`;
+        if (pctEl) pctEl.textContent = Math.round(value);
+    }
+
+    function closeLoader() {
+        if (closing) return;
+        closing = true;
+        paint(100);
         setTimeout(() => {
-            loader.classList.add("fade-out");
+            loaderEl.classList.add("fade-out");
+            setTimeout(gfFinishLoading, 180);
+            setTimeout(() => { loaderEl.style.display = "none"; gfFinishLoading(); }, 900);
+        }, reducedMotionPref ? 60 : 280);
+    }
 
-            setTimeout(() => {
-                loader.style.display = "none";
-                document.body.classList.remove("loading");
-            }, 700);
+    function tick(now) {
+        if (closing) return;
+        const elapsed = now - t0;
+        const dt = Math.min(now - last, 100);
+        last = now;
 
-        }, 2800);
-    });
+        // Sebelum halaman selesai: naik cepat lalu melambat (maks ~86%). Sesudahnya: lanjut ke 100%, tapi tidak lebih cepat dari waktu minimal.
+        const realCap = pageLoaded || elapsed > MAX_TIME ? 100 : 86 * (1 - Math.exp(-elapsed / 1100));
+        const timeCap = 100 * Math.min(1, elapsed / MIN_TIME);
+        const goal = Math.min(realCap, timeCap);
+
+        shown += (goal - shown) * (1 - Math.exp(-dt / 140));
+        paint(shown);
+
+        if (shown >= 99.4 && goal >= 100) closeLoader();
+        else requestAnimationFrame(tick);
+    }
+
+    requestAnimationFrame(tick);
+    setTimeout(closeLoader, MAX_TIME + 1500);   // jaring pengaman (mis. tab di background membuat rAF berhenti)
 }
 
 /* ===== TYPING EFFECT ===== */
-
 /* ===== TYPING EFFECT FIX ===== */
 const textElement = document.querySelector(".typing-text");
 const words = ["GuideFs", "Developer", "Azpri", "Student"];
@@ -84,67 +153,24 @@ if (textElement) {
 
 
 
-/* ===== LIQUID GLASS NAVIGATION ===== */
-
-const navLinks = document.querySelector("#nav-links");
-
-if (navLinks) {
-    const links = navLinks.querySelectorAll("a");
-    const indicator = navLinks.querySelector(".nav-indicator");
-
-    function moveIndicator(link) {
-        if (!indicator || !link) return;
-
-        indicator.style.width = `${link.offsetWidth}px`;
-        indicator.style.transform =
-            `translateX(${link.offsetLeft}px)`;
-    }
-
-    function setActive(link) {
-        if (!link) return;
-
-        links.forEach(item => {
-            item.classList.toggle("active", item === link);
-        });
-
-        moveIndicator(link);
-    }
-
-    // Klik menu: langsung pindahkan indikator
-    links.forEach(link => {
-        link.addEventListener("click", () => {
-            setActive(link);
-        });
-    });
-
-    // Tentukan menu awal
-    const initialLink =
-        [...links].find(link =>
-            link.getAttribute("href") === window.location.hash
-        ) ||
-        navLinks.querySelector("a.active") ||
-        links[0];
-
-    setActive(initialLink);
-
-    // Sesuaikan ukuran layar
-    window.addEventListener("resize", () => {
-        const activeLink = navLinks.querySelector("a.active");
-        moveIndicator(activeLink);
-    });
-}
-
+/* Navbar (pill + scroll-spy) dikelola theme.js. Blok .nav-indicator lama dibuang di V4.4. */
 
 
 /* ===== AOS ANIMATIONS ===== */
+const gfSmallScreen = window.innerWidth < 769;
+
 if (typeof AOS !== "undefined") {
     AOS.init({
-        duration: 900,
-        once: false,
-        offset: 100,
+        duration: gfSmallScreen ? 700 : 900,
+        once: gfSmallScreen,          // di HP animasi cukup sekali (hemat baterai & tidak patah saat scroll naik-turun)
+        offset: gfSmallScreen ? 60 : 100,
         easing: "ease",
-        mirror: true
+        mirror: !gfSmallScreen,
+        disable: reducedMotionPref
     });
+} else {
+    // CDN AOS gagal dimuat: tampilkan semua konten (kalau tidak, elemen data-aos tetap transparan)
+    document.documentElement.classList.add("no-aos");
 }
 
 
@@ -348,24 +374,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-/* ===== PURPLE CURSOR PARTICLE TRAIL ===== */
-document.addEventListener("mousemove", (event) => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        return;
-    }
-
-    const particle = document.createElement("span");
-    particle.className = "cursor-particle";
-
-    particle.style.left = `${event.clientX}px`;
-    particle.style.top = `${event.clientY}px`;
-
-    document.body.appendChild(particle);
-
-    setTimeout(() => {
-        particle.remove();
-    }, 650);
-});
+/* (Blok partikel kursor ganda dibuang di V4.4: sudah ditangani createParticle di bagian bawah.) */
 
 
 /* ===== GUIDEFs YOUTUBE MUSIC PLAYER ===== */
@@ -422,7 +431,10 @@ function setPanel(open) {
         open ? "Tutup music player" : "Buka music player"
     );
 
-    if (open) searchInput.focus();
+    if (open) {
+        loadYouTubeAPI();      // API YouTube baru diunduh saat player pertama kali dibuka (hemat data & CPU saat load)
+        searchInput.focus();
+    }
 }
 
 trigger.addEventListener("click", () => {
@@ -523,7 +535,7 @@ function createPlayer() {
     });
 }
 
-loadYouTubeAPI();
+// loadYouTubeAPI() dipanggil malas dari setPanel(true)
 
 /* CARI LAGU */
 
@@ -1001,24 +1013,30 @@ window.addEventListener("load", () => {
     }
 
     // Tunggu loader selesai
-    setTimeout(showPartisiHint, 3500);
+    gfReady(() => setTimeout(showPartisiHint, 1200));
 
-    // Muncul kembali setiap 40 detik
-    setInterval(showPartisiHint, 20000);
+    // Muncul kembali tiap 40 detik, maksimal 3 kali (tidak mengganggu terus-menerus)
+    let hintCount = 0;
+    const hintTimer = setInterval(() => {
+        showPartisiHint();
+        if (++hintCount >= 3) clearInterval(hintTimer);
+    }, 40000);
 });
 
 /* ===== CURSOR & TOUCH PARTICLES ===== */
 
 let lastParticleTime = 0;
+let liveParticles = 0;
+const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
 
 function createParticle(x, y) {
     const now = Date.now();
 
-    // Batasi jumlah partikel di HP
-    if (now - lastParticleTime < 25) return;
+    // Batasi laju & jumlah partikel (HP lebih jarang) supaya DOM tidak membengkak saat scroll/geser
+    if (now - lastParticleTime < (coarsePointer ? 90 : 25) || liveParticles >= 24) return;
     lastParticleTime = now;
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (reducedMotionPref) return;
 
     const particle = document.createElement("span");
     particle.className = "cursor-particle";
@@ -1027,8 +1045,12 @@ function createParticle(x, y) {
     particle.style.top = `${y}px`;
 
     document.body.appendChild(particle);
+    liveParticles++;
 
-    setTimeout(() => particle.remove(), 650);
+    setTimeout(() => {
+        particle.remove();
+        liveParticles--;
+    }, 650);
 }
 
 // Komputer

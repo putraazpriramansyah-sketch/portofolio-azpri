@@ -1,39 +1,67 @@
-/* GUIDEFs theme.js: tema, navbar liquid glass, scroll halus, awan realistis & Milky Way */
+/* GUIDEFs theme.js V4.4: tema (Normal / Sunset / Night), navbar liquid glass, langit & awan, Milky Way.
+   Catatan performa: tidak ada View Transition API (sering janggal di HP), --sp tidak ditulis ke <html>,
+   dan canvas tidak dibangun ulang saat address-bar HP naik/turun. */
 (() => {
   const root = document.documentElement, KEY = 'gf-theme';
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const MODES = ['light', 'sunset', 'night'];
   const isNight = () => root.dataset.theme === 'night';
+  const isSmall = () => innerWidth < 769;
   const rnd = Math.random, gauss = () => (rnd() + rnd() + rnd() - 1.5) / 1.5;
-  let ready = false;
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  let ready = false, wiping = false;
 
-  /* ---------- TOGGLE TEMA ---------- */
+  /* ---------- TEMA + ANIMASI WIPE RINGAN ---------- */
   const btn = document.getElementById('theme-toggle');
+  const META = { night: '#050d17', sunset: '#2c2a78', light: '#4b9cdb' };
+  const WIPE = {
+    night: 'radial-gradient(circle at 50% 35%,#10283a,#050d17 70%)',
+    sunset: 'linear-gradient(180deg,#2c2a78 0%,#b6487e 55%,#ff9a57 100%)',
+    light: 'linear-gradient(180deg,#4b9cdb 0%,#8dc9ef 45%,#e3eef3 100%)'
+  };
+  const SYMBOL = { night: '☾', sunset: '☼', light: '✺' };
   function apply(t) {
     root.dataset.theme = t;
     try { localStorage.setItem(KEY, t); } catch (e) {}
+    let m = document.querySelector('meta[name="theme-color"]');
+    if (!m) { m = document.createElement('meta'); m.name = 'theme-color'; document.head.appendChild(m); }
+    m.content = META[t];
     if (btn) {
-      btn.setAttribute('aria-label', t === 'night' ? 'Ganti ke mode sunset' : t === 'sunset' ? 'Ganti ke mode normal' : 'Ganti ke mode night');
-      const symbol = btn.querySelector('.theme-symbol');
-      if (symbol) symbol.textContent = t === 'night' ? '☾' : t === 'sunset' ? '☼' : '✺';
+      const nxt = MODES[(MODES.indexOf(t) + 1) % 3];
+      btn.setAttribute('aria-label', 'Ganti ke mode ' + (nxt === 'light' ? 'normal' : nxt));
+      const s = btn.querySelector('.theme-symbol'); if (s) s.textContent = SYMBOL[t];
     }
     if (ready) kick();
   }
-  apply(root.dataset.theme || (isNight() ? 'night' : 'light'));
-  if (btn) {
-    btn.addEventListener('click', () => {
-      const modes = ['light', 'sunset', 'night'];
-      const cur = root.dataset.theme || 'night';
-      const next = modes[(modes.indexOf(cur) + 1) % modes.length];
-      if (!document.startViewTransition || reduced.matches) return apply(next);
-      const r = btn.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
-      const rad = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
-      document.startViewTransition(() => apply(next)).ready.then(() =>
-        root.animate({ clipPath: [`circle(0 at ${x}px ${y}px)`, `circle(${rad}px at ${x}px ${y}px)`] },
-          { duration: 800, easing: 'cubic-bezier(.32,.72,0,1)', pseudoElement: '::view-transition-new(root)' }));
-    });
-  }
+  if (!MODES.includes(root.dataset.theme)) root.dataset.theme = 'night';
+  apply(root.dataset.theme);
 
-  /* Native scrolling is smoother and cheaper on mobile than a JS scroll loop. */
+  function switchTheme(next, x, y) {
+    if (wiping) return;
+    if (reduced.matches) return apply(next);
+    wiping = true;
+    const rad = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y)) + 4;
+    const w = document.createElement('div');
+    w.className = 'theme-wipe';
+    w.style.cssText = `left:${x - rad}px;top:${y - rad}px;width:${rad * 2}px;height:${rad * 2}px;background:${WIPE[next]}`;
+    document.body.appendChild(w);
+    const grow = w.animate([{ transform: 'scale(.001)' }, { transform: 'scale(1)' }],
+      { duration: isSmall() ? 520 : 640, easing: 'cubic-bezier(.32,.72,0,1)', fill: 'forwards' });
+    grow.onfinish = () => {
+      root.classList.add('no-trans');          // ganti tema saat tertutup: tanpa transisi yang kedap-kedip
+      apply(next);
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        root.classList.remove('no-trans');
+        const out = w.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 420, easing: 'ease-out', fill: 'forwards' });
+        out.onfinish = () => { w.remove(); wiping = false; };
+      }));
+    };
+  }
+  btn && btn.addEventListener('click', () => {
+    const r = btn.getBoundingClientRect();
+    switchTheme(MODES[(MODES.indexOf(root.dataset.theme) + 1) % 3], r.left + r.width / 2, r.top + r.height / 2);
+  });
+
   root.style.scrollBehavior = reduced.matches ? 'auto' : 'smooth';
 
   /* ---------- NAVBAR: pill + scroll-spy ---------- */
@@ -59,25 +87,30 @@
     }), { rootMargin: '-45% 0px -50% 0px' });
     Object.keys(map).forEach(id => { const s = document.getElementById(id); s && io.observe(s); });
     move(links.find(a => a.getAttribute('href') === location.hash) || links[0], false);
-    addEventListener('resize', () => move(cur, false));
+    let lw = innerWidth;
+    addEventListener('resize', () => { if (innerWidth !== lw) { lw = innerWidth; move(cur, false); } });
     document.fonts && document.fonts.ready.then(() => move(cur, false));
   }
 
-  /* ---------- AWAN REALISTIS (digambar sekali di canvas) ---------- */
-  const skyDay = document.querySelector('.sky-day');
-  function makeCloud() {
-    const w = 560, h = 233, k = Math.min(devicePixelRatio || 1, 1.5);
-    const c = document.createElement('canvas'); c.width = w * k; c.height = h * k;
-    const g = c.getContext('2d'); g.scale(k, k);
-    const base = h * .78, P = [];
+  /* ---------- LANGIT: awan siang & stratus sunset (digambar sekali) ---------- */
+  const sky = document.querySelector('.sky');
+  const cloudsEl = document.querySelector('.sky-clouds');
+  const groups = [];
+  const dprC = Math.min(devicePixelRatio || 1, isSmall() ? 1 : 1.25);
+  function newCanvas(w, h) {
+    const c = document.createElement('canvas'); c.width = Math.round(w * dprC); c.height = Math.round(h * dprC);
+    const g = c.getContext('2d'); g.scale(dprC, dprC); return [c, g];
+  }
+  function makeDayCloud() {
+    const w = 480, h = 200, [c, g] = newCanvas(w, h), base = h * .86, P = [];
     const soft = (x, y, r, col, al) => {
       const gr = g.createRadialGradient(x, y, 0, x, y, r);
       gr.addColorStop(0, `rgba(${col},${al})`); gr.addColorStop(.55, `rgba(${col},${al * .72})`); gr.addColorStop(1, `rgba(${col},0)`);
       g.fillStyle = gr; g.fillRect(x - r, y - r, r * 2, r * 2);
     };
-    for (let i = 0; i < 120; i++) {
-      const t = rnd(), dome = Math.pow(Math.sin(Math.PI * t), .8), r = h * (.08 + .15 * rnd()) * (.4 + .85 * dome);
-      P.push([w * (.06 + .88 * t) + gauss() * w * .03, base - r * .4 - Math.pow(rnd(), 1.2) * dome * h * .55, r]);
+    for (let i = 0; i < (isSmall() ? 70 : 100); i++) {
+      const t = rnd(), dome = Math.pow(Math.sin(Math.PI * t), .8), r = h * (.07 + .12 * rnd()) * (.4 + .85 * dome);
+      P.push([w * (.06 + .88 * t) + gauss() * w * .03, base - r * .4 - Math.pow(rnd(), 1.2) * dome * h * .45, r]);
     }
     P.sort((a, b) => a[1] - b[1]);
     for (const [x, y, r] of P) soft(x, y + r * .22, r * 1.15, '196,214,241', .55);
@@ -95,34 +128,76 @@
     g.fillStyle = m; g.fillRect(0, 0, w, h);
     return c;
   }
-  if (skyDay && skyDay.children.length === 0) {
-    [[6, 9, 340, 24, -12, 52, .95], [58, 6, 260, -18, -16, 44, .8], [30, 30, 420, 30, -22, 60, .92], [74, 38, 300, -26, -18, 48, .88],
-     [-4, 56, 380, 20, -30, 66, .85], [52, 64, 460, -30, -26, 58, .95], [84, 78, 280, -14, -34, 50, .8], [18, 84, 340, 26, -38, 62, .9]]
-      .forEach(([x, y, w, dx, dy, t, o]) => {
+  function makeStratus() {      // awan memanjang saat senja: atas ungu, bawah disinari matahari
+    const w = 720, h = 150, [c, g] = newCanvas(w, h), P = [];
+    const el = (x, y, rx, ry, col, a) => {
+      g.save(); g.translate(x, y); g.scale(1, ry / rx);
+      const gr = g.createRadialGradient(0, 0, 0, 0, 0, rx);
+      gr.addColorStop(0, `rgba(${col},${a})`); gr.addColorStop(.6, `rgba(${col},${a * .6})`); gr.addColorStop(1, `rgba(${col},0)`);
+      g.fillStyle = gr; g.fillRect(-rx, -rx, rx * 2, rx * 2); g.restore();
+    };
+    for (let i = 0; i < (isSmall() ? 60 : 90); i++) {
+      const t = rnd(), env = Math.pow(Math.sin(Math.PI * t), .7), rx = h * (.2 + .34 * rnd()) * (.5 + env);
+      P.push([w * (.04 + .92 * t) + gauss() * w * .02, h * .52 + gauss() * h * .1 * (.4 + env), rx, rx * (.2 + .12 * rnd()), env]);
+    }
+    for (const [x, y, rx, ry, e] of P) el(x, y - ry * .2, rx, ry, '92,52,120', .5 * e + .12);
+    for (const [x, y, rx, ry, e] of P) el(x, y + ry * .55, rx * .85, ry * .8, '255,128,96', .48 * (.5 + e * .5));
+    P.forEach(([x, y, rx, ry], i) => { if (i % 3 === 0) el(x, y + ry * .95, rx * .6, ry * .35, '255,214,150', .6); });
+    P.forEach(([x, y, rx, ry], i) => { if (i % 4 === 0) el(x, y - ry * .6, rx * .7, ry * .5, '186,136,196', .22); });
+    g.globalCompositeOperation = 'destination-in';
+    const m = g.createLinearGradient(0, 0, w, 0);
+    m.addColorStop(0, 'rgba(0,0,0,0)'); m.addColorStop(.12, '#000'); m.addColorStop(.88, '#000'); m.addColorStop(1, 'rgba(0,0,0,0)');
+    g.fillStyle = m; g.fillRect(0, 0, w, h);
+    return c;
+  }
+  if (cloudsEl && !cloudsEl.children.length) {
+    const sm = isSmall(), K = sm ? .6 : 1;
+    // [x%, y%, lebar px, opasitas, detik drift]
+    const DAY = {
+      far: sm ? [[10, 12, 200, .8, 90], [56, 30, 220, .75, 100]] : [[8, 10, 300, .8, 90], [62, 7, 240, .7, 80], [40, 32, 320, .75, 100]],
+      near: sm ? [[-8, 55, 300, .92, 110], [48, 74, 320, .95, 120]] : [[-3, 52, 400, .92, 110], [55, 60, 440, .95, 120], [78, 22, 300, .85, 90], [22, 80, 360, .9, 100]]
+    };
+    const SUN = {
+      far: sm ? [[4, 28, 300, .5, 120], [50, 40, 300, .45, 130]] : [[4, 26, 460, .5, 120], [58, 20, 420, .45, 130], [28, 38, 380, .5, 140]],
+      near: sm ? [[-10, 52, 470, .8, 150], [40, 80, 520, .9, 160], [-5, 88, 480, .85, 140]] : [[-6, 50, 720, .8, 150], [62, 52, 520, .75, 130], [-2, 78, 800, .9, 160], [52, 80, 760, .88, 140]]
+    };
+    const build = (cls, make, set) => ['far', 'near'].forEach(layer => {
+      let g = groups.find(o => o.layer === layer);
+      if (!g) { const d = document.createElement('div'); d.className = 'cl-group'; cloudsEl.appendChild(d); g = { layer, el: d, k: layer === 'far' ? .05 : .14 }; groups.push(g); }
+      set[layer].forEach(([x, y, w, o, dur]) => {
         const d = document.createElement('div'), i = document.createElement('i');
-        d.className = 'cloud'; d.style.cssText = `--x:${x}%;--y:${y}%;--w:${w}px;--dx:${dx};--dy:${dy};--t:${t}s;--o:${o}`;
-        i.appendChild(makeCloud()); d.appendChild(i); skyDay.appendChild(d);
+        d.className = 'cl ' + cls; d.style.cssText = `left:${x}%;top:${y}%;width:${Math.round(w * (cls === 'cl-day' ? K : 1))}px;--o:${o}`;
+        i.style.setProperty('--d', dur + 's'); i.appendChild(make()); d.appendChild(i); g.el.appendChild(d);
       });
+    });
+    build('cl-day', makeDayCloud, DAY); build('cl-sun', makeStratus, SUN);
   }
 
-  /* ---------- MILKY WAY REALISTIS (noise fbm) ---------- */
-  const cv = document.getElementById('sky-night');
+  /* ---------- LOOP TUNGGAL: scroll halus + Milky Way ---------- */
+  let target = 0, sp = 0, raf = 0, lastFrame = 0, lastPar = -1;
+  const cv = document.getElementById('sky-night'), cx = cv && cv.getContext('2d');
+  let W = innerWidth, H = innerHeight, dpr = 1, S = 0, band = null, stars = [], shoot = null, nextShoot = 4000, bw = 0, bh = 0;
+
+  function parallax() {
+    if (isNight() || Math.abs(sp - lastPar) < .0004) return;
+    lastPar = sp;
+    if (sky) sky.style.setProperty('--sp', sp.toFixed(3));
+    for (const g of groups) g.el.style.transform = `translate3d(0,${(-sp * H * g.k).toFixed(1)}px,0)`;
+  }
+
   if (cv) {
-    const cx = cv.getContext('2d');
-    let W, H, dpr, S, band, stars = [], shoot = null, nextShoot = 4000, target = 0, sp = 0, raf = 0, lastFrame = 0;
     const NT = 256, nt = Float32Array.from({ length: NT * NT }, rnd);
-    function vn(x, y) {
+    const vn = (x, y) => {
       const xi = Math.floor(x), yi = Math.floor(y), xf = x - xi, yf = y - yi, u = xf * xf * (3 - 2 * xf), v = yf * yf * (3 - 2 * yf);
       const a = nt[((yi & 255) << 8) | (xi & 255)], b = nt[((yi & 255) << 8) | ((xi + 1) & 255)];
       const c = nt[(((yi + 1) & 255) << 8) | (xi & 255)], d = nt[(((yi + 1) & 255) << 8) | ((xi + 1) & 255)];
       return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
-    }
+    };
     const fbm = (x, y) => { let s = 0, a = .5; for (let i = 0; i < 5; i++) { s += a * vn(x, y); x *= 2.03; y *= 2.03; a *= .5; } return s; };
-    const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
-
-    function build() {
-      dpr = Math.min(devicePixelRatio || 1, W < 769 ? 1 : 1.25); W = innerWidth; H = innerHeight;
-      cv.width = W * dpr; cv.height = H * dpr;
+    const buildNight = () => {
+      W = innerWidth; H = innerHeight; bw = W; bh = H;
+      dpr = Math.min(devicePixelRatio || 1, W < 769 ? 1 : 1.25);
+      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
       S = Math.ceil(Math.hypot(W, H) * 1.25);
       const gw = W < 769 ? 176 : 280, im = new ImageData(gw, gw), L = new Float32Array(gw * gw), D = new Float32Array(gw * gw);
       const ox = rnd() * 60, oy = rnd() * 60;
@@ -155,9 +230,9 @@
         x: rnd() * W, y: rnd() * H, r: .4 + rnd() * rnd() * 1.5, p: rnd() * 6.28, v: .6 + rnd() * 1.8,
         d: .2 + rnd() * .8, c: rnd() < .15 ? '255,225,190' : rnd() < .5 ? '190,205,255' : '255,255,255'
       }));
-    }
-
-    function draw(t) {
+    };
+    var drawNight = t => {
+      if (!band) buildNight();
       const g = cx.createLinearGradient(0, 0, 0, H * dpr);
       g.addColorStop(0, '#02030a'); g.addColorStop(.55, '#050918'); g.addColorStop(1, '#0a0a1a');
       cx.setTransform(1, 0, 0, 1, 0, 0); cx.fillStyle = g; cx.fillRect(0, 0, cv.width, cv.height);
@@ -182,46 +257,76 @@
           }
         }
       }
-    }
-    function readScroll() { const h = root.scrollHeight - innerHeight; target = h > 0 ? scrollY / h : 0; kick(); }
-    function loop(t) {
-      raf = 0; if (document.hidden) return;
-      const frameGap = innerWidth < 769 ? 66 : 40;
-      if (isNight() && !reduced.matches && t - lastFrame < frameGap) { raf = requestAnimationFrame(loop); return; }
-      lastFrame = t;
-      sp += (target - sp) * (reduced.matches ? 1 : .06);
-      root.style.setProperty('--sp', sp.toFixed(4));
-      if (isNight()) draw(t);
-      if ((isNight() && !reduced.matches) || Math.abs(target - sp) > .0004) raf = requestAnimationFrame(loop);
-    }
-    function kick() { if (!raf) raf = requestAnimationFrame(loop); }
-
-    build(); readScroll(); ready = true;
-    let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { build(); kick(); }, 250); });
-    addEventListener('scroll', readScroll, { passive: true });
-    document.addEventListener('visibilitychange', kick);
-    new MutationObserver(kick).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
-    kick();
-  } else {
-    ready = true;
+    };
   }
-
-  /* ---------- TAB SWITCHER (Portfolio Showcase) ---------- */
-  document.addEventListener('DOMContentLoaded', () => {
-    const tabBtns = document.querySelectorAll('.portfolio-tab-btn');
-    const tabContents = document.querySelectorAll('.portfolio-tab-content');
-    if (tabBtns.length > 0) {
-      tabBtns.forEach(b => {
-        b.addEventListener('click', () => {
-          const target = b.getAttribute('data-tab');
-          tabBtns.forEach(btn => btn.classList.remove('active'));
-          tabContents.forEach(c => c.classList.remove('active'));
-          b.classList.add('active');
-          const tEl = document.getElementById('tab-' + target);
-          if (tEl) tEl.classList.add('active');
-        });
-      });
-    }
+  function frame(t) {
+    raf = 0; if (document.hidden) return;
+    const night = isNight(), anim = night && !reduced.matches;
+    if (anim && t - lastFrame < (isSmall() ? 66 : 40)) { raf = requestAnimationFrame(frame); return; }
+    lastFrame = t;
+    const d = target - sp; sp += d * (reduced.matches ? 1 : .09); if (Math.abs(d) < .0003) sp = target;
+    if (night) { if (drawNight) drawNight(t); } else parallax();
+    if (anim || Math.abs(target - sp) > .0003) raf = requestAnimationFrame(frame);
+  }
+  function kick() { if (!raf) raf = requestAnimationFrame(frame); }
+  const progBar = document.querySelector('.scroll-progress i');
+  const readScroll = () => {
+    const h = root.scrollHeight - innerHeight; target = h > 0 ? clamp(scrollY / h) : 0;
+    if (progBar) progBar.style.transform = `scaleX(${target.toFixed(4)})`;   // garis progres scroll (transform saja, ringan)
+    kick();
+  };
+  addEventListener('scroll', readScroll, { passive: true });
+  // Rebuild hanya jika lebar berubah / tinggi berubah drastis. Address-bar HP yang naik-turun TIDAK memicu rebuild.
+  let rt; addEventListener('resize', () => {
+    clearTimeout(rt); rt = setTimeout(() => {
+      if (Math.abs(innerWidth - bw) > 40 || Math.abs(innerHeight - bh) > bh * .3) { band = null; if (cv) { W = innerWidth; H = innerHeight; } kick(); }
+    }, 300);
   });
+  document.addEventListener('visibilitychange', kick);
+  ready = true; readScroll(); kick();
 
+  /* ---------- TAB PORTFOLIO + ORNAMEN PEMBATAS ---------- */
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabBtns = document.querySelectorAll('.portfolio-tab-btn'), tabContents = document.querySelectorAll('.portfolio-tab-content');
+    const tabBar = document.querySelector('.portfolio-tabs');
+    const tabList = [...tabBtns];
+    let tabIdx = Math.max(0, tabList.findIndex(b => b.classList.contains('active')));
+    function setTab(i, fromUser) {
+      i = Math.max(0, Math.min(tabList.length - 1, i)); if (!tabList[i]) return;
+      tabIdx = i;
+      tabList.forEach((x, k) => { x.classList.toggle('active', k === i); x.setAttribute('aria-selected', k === i ? 'true' : 'false'); x.tabIndex = k === i ? 0 : -1; });
+      tabContents.forEach(c => c.classList.remove('active'));
+      const tEl = document.getElementById('tab-' + tabList[i].getAttribute('data-tab')); if (tEl) tEl.classList.add('active');
+      if (tabBar) tabBar.style.setProperty('--ti', i);
+    }
+    tabList.forEach((b, i) => {
+      const key = b.getAttribute('data-tab'), panel = document.getElementById('tab-' + key);
+      b.setAttribute('role', 'tab'); b.id = b.id || 'tabbtn-' + key;
+      if (panel) { b.setAttribute('aria-controls', panel.id); panel.setAttribute('role', 'tabpanel'); panel.setAttribute('aria-labelledby', b.id); }
+      b.addEventListener('click', () => setTab(i, true));
+    });
+    setTab(tabIdx);
+    /* keyboard: panah kiri/kanan, Home, End (pola WAI-ARIA tabs) */
+    if (tabBar) tabBar.addEventListener('keydown', e => {
+      const k = e.key, n = tabList.length;
+      const to = k === 'ArrowRight' ? (tabIdx + 1) % n : k === 'ArrowLeft' ? (tabIdx - 1 + n) % n : k === 'Home' ? 0 : k === 'End' ? n - 1 : -1;
+      if (to < 0) return; e.preventDefault(); setTab(to, true); tabList[to].focus();
+    });
+    /* swipe kiri/kanan di HP untuk pindah tab (diabaikan bila sentuhan dimulai di area yang bisa di-scroll horizontal) */
+    const tabArea = tabContents.length ? tabContents[0].parentElement : null;
+    if (tabArea) {
+      let sx = 0, sy = 0, st = 0, ok = false;
+      const hScroll = el => { for (; el && el !== tabArea; el = el.parentElement) { const o = getComputedStyle(el).overflowX; if ((o === 'auto' || o === 'scroll') && el.scrollWidth > el.clientWidth + 4) return true; } return false; };
+      tabArea.addEventListener('touchstart', e => { const t = e.touches[0]; sx = t.clientX; sy = t.clientY; st = Date.now(); ok = e.touches.length === 1 && !hScroll(e.target); }, { passive: true });
+      tabArea.addEventListener('touchend', e => {
+        if (!ok) return; const t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+        if (Date.now() - st < 700 && Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.8) setTab(tabIdx + (dx < 0 ? 1 : -1), true);
+      }, { passive: true });
+    }
+    const divs = document.querySelectorAll('.gi-divider');
+    if (divs.length && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .4 });
+      divs.forEach(d => io.observe(d));
+    } else divs.forEach(d => d.classList.add('in'));
+  });
 })();
