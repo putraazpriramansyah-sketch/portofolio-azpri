@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GuideFs Official | Portfolio</title>
+    <meta name="description" content="Portofolio Putra Azpriramansyah (Azpri / GuideFs): mahasiswa S1 Sistem Informasi Universitas Tanjungpura, web development, astrophotography, dan Mobile Legends.">
+    <meta name="author" content="Putra Azpriramansyah">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="GuideFs Official | Portfolio">
+    <meta property="og:description" content="Beginner developer, mahasiswa Sistem Informasi, dan astrophotographer. Lihat sertifikat, tech stack, dan galeri langit malam.">
+    <meta name="twitter:card" content="summary">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23050d17'/%3E%3Cpath d='M32 9l5.2 18.8L56 32l-18.8 5.2L32 56l-5.2-18.8L8 32l18.8-5.2z' fill='%23d7c69b'/%3E%3C/svg%3E">
+
+    <script>try{var t=localStorage.getItem("gf-theme")||"night";document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme="night"}</script>
+    <meta name="theme-color" content="#050d17">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=12">
+    <link rel="stylesheet" href="theme.css?v=12">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <noscript><style>#loader{display:none!important}body.loading{overflow:auto!important}[data-aos]{opacity:1!important;transform:none!important}</style></noscript>
+</head>
+
+<body>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="gi-center" viewBox="0 0 120 40"><g fill="currentColor"><path d="M60 3 L63.4 16.6 L77 20 L63.4 23.4 L60 37 L56.6 23.4 L43 20 L56.6 16.6Z"/><path d="M42 20 C37 14.5 31 12.5 21 13.5 C27 15.8 29.5 18 30.5 20 C29.5 22 27 24.2 21 26.5 C31 27.5 37 25.5 42 20Z" opacity=".9"/><path d="M78 20 C83 14.5 89 12.5 99 13.5 C93 15.8 90.5 18 89.5 20 C90.5 22 93 24.2 99 26.5 C89 27.5 83 25.5 78 20Z" opacity=".9"/><circle cx="14" cy="20" r="2"/><circle cx="106" cy="20" r="2"/></g><g fill="none" stroke="currentColor" stroke-width="1"><path d="M60 9 L71 20 L60 31 L49 20Z" opacity=".75"/><path d="M7 20H3M117 20H113" opacity=".6"/></g></symbol></defs></svg>
+    <div class="sky" aria-hidden="true"><div class="sky-layer sky-light"></div><div class="sky-layer sky-sunset"><i class="sun"></i></div><div class="sky-clouds"></div><canvas id="sky-night"></canvas></div>
+    <!-- LOADER (V4.4b): gaya WelcomeScreen ekizr.com -> ikon, "Welcome To My / Portfolio Website" kata per kata, pill ketik -->
+    <div id="loader" role="status" aria-live="polite" aria-label="Memuat website">
+        <div class="ld-glow" aria-hidden="true"></div>
+        <div class="loader-content">
+            <div class="ld-icons" aria-hidden="true">
+                <span class="ld-icon" style="--n:0"><i class="fa-solid fa-code"></i></span>
+                <span class="ld-icon" style="--n:1"><i class="fa-solid fa-user"></i></span>
+                <span class="ld-icon" style="--n:2"><i class="fa-solid fa-moon"></i></span>
+            </div>
+            <h1 class="ld-heading" aria-label="Welcome To My Portfolio Website">
+                <span class="ld-line" aria-hidden="true"><span class="ld-w ld-r" style="--n:1">Welcome</span> <span class="ld-w ld-r" style="--n:2">To</span> <span class="ld-w ld-r" style="--n:3">My</span></span>
+                <span class="ld-line ld-line2" aria-hidden="true"><span class="ld-w ld-u" style="--n:4">Portfolio</span> <span class="ld-w ld-u" style="--n:5">Website</span></span>
+            </h1>
+            <div class="ld-link" aria-hidden="true">
+                <span class="ld-pill"><i class="fa-solid fa-globe"></i><span class="ld-type" id="ld-type" data-text="Guide Official"></span><b class="ld-caret">|</b></span>
+            </div>
+        </div>
+    </div>
+
+    <a class="skip-link" href="#about">Lewati ke konten</a>
+
+    <!-- LIQUID GLASS NAVBAR -->
+    <header class="navbar">
+    <nav class="nav-links" id="nav-links" aria-label="Navigasi utama">
+        <a href="#home" class="active">Home</a>
+        <a href="#about">About Me</a>
+        <a href="#hobbies">Interests</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#contact">Contact</a>
+
+        <span class="nav-pill" aria-hidden="true"></span>
+    </nav>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Ganti mode"><span class="theme-symbol" aria-hidden="true">☾</span></button>
+</header>
+    <div class="scroll-progress" aria-hidden="true"><i></i></div>
+    <main>
+        <!-- HOME: DESAIN AWAL DIPERTAHANKAN -->
+        <section class="hero" id="home">
+            <div class="hero-text">
+                <h3 class="fadeup">Welcome to My Website</h3>
+
+                <h1 class="fadeup1">
+                    I'm a <span class="typing-text"></span>
+                </h1>
+
+                <div class="fadeup2">
+                    <h2 class="typing">Guide Official</h2>
+                </div>
+
+                <p class="text1 fadeup3">
+                    Halo! Saya Putra Azpriramansyah, Selamat datang di website portofolio saya. Website ini merupakan ruang digital untuk mengenal saya lebih dekat, melihat karya dan proyek yang saya kembangkan, serta menemukan berbagai informasi tentang aktivitas dan minat saya di bidang teknologi. Semua informasi penting saya rangkum di satu tempat agar lebih mudah diakses.<br>
+                    TikTok: @langit.guid | Instagram: @ptraaz_pri
+                </p>
+
+                <div class="social-icons imageReveal">
+                    <a class="ig" href="https://instagram.com/ptraaz_pri"
+                       target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+
+                    <a class="tt" href="https://tiktok.com/@langitguid"
+                       target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+
+                    <a class="wa" href="https://wa.me/6289516280483"
+                       target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+
+                <a href="#contact" class="btn-hire fadeup4">Contact Me</a>
+            </div>
+
+        </section>
+
+        <div class="gi-divider" aria-hidden="true"><span class="gi-line"></span><svg class="gi-emblem" viewBox="0 0 120 40"><use href="#gi-center"/></svg><span class="gi-line flip"></span><span class="gi-label">I · About Me</span></div>
+
+        <!-- ABOUT ME: ISI UTAMA DIPERTAHANKAN -->
+<!-- ABOUT ME -->
+<section class="about" id="about">
+    <!-- ABOUT ME ASLI -->
+    <div class="about-container">
+        <div class="about-img" data-aos="fade-up-right" data-aos-duration="900">
+            <img src="Photo/myfoto.jpeg"
+                 alt="Foto Gweh">
+        </div>
+
+        <div class="about-text" data-aos="fade-up" data-aos-duration="900">
+            <p class="section-label">AKU SIAPA?</p>
+            <h2>About <span>Me</span></h2>
+            <h3>Beginner Developer | Information Systems Student</h3>
+
+            <p>
+                Halo! Nama gua Putra Azpriramansyah, biasa dikenal sebagai
+                Azpri. Gua mahasiswa S1 Sistem Informasi di Universitas
+                Tanjungpura yang tertarik dengan dunia teknologi,
+                web development, dan programming.
+            </p>
+
+            <p>
+                Di luar dunia teknologi, gua suka astrophotography,
+                mengabadikan keindahan langit malam, dan bermain Mobile
+                Legends. Website ini menjadi tempat untuk mengenalkan diri,
+                minat, serta perjalanan gua.
+            </p>
+            
+
+            <a href="#contact" class="btn-hire">Contact Me</a>
+        </div>
+    </div>
+</section>
+
+<!-- EDUCATION: BAGIAN TERPISAH -->
+<div class="gi-divider" aria-hidden="true"><span class="gi-line"></span><svg class="gi-emblem" viewBox="0 0 120 40"><use href="#gi-center"/></svg><span class="gi-line flip"></span><span class="gi-label">II · Journey</span></div>
+<section class="education-section" id="education">
+    <div class="education" data-aos="fade-up">
+        <div class="education-header">
+            <p class="section-label">MY JOURNEY</p>
+            <h2>My <span>Pendidikan</span></h2>
+            <p class="education-description">
+                Perjalanan pendidikan saya hingga saat ini.
+            </p>
+        </div>
+
+        <div class="education-timeline">
+            <article class="education-item">
+                <div class="education-marker">
+                    <i class="fas fa-school"></i>
+                </div>
+                <div class="education-card">
+                    <span class="education-number">01 / ELEMENTARY SCHOOL</span>
+                    <h3>Sekolah Dasar</h3>
+                    <p class="education-place">SD Negeri 06</p>
+                    <span class="education-status">SD</span>
+                </div>
+            </article>
+
+            <article class="education-item">
+                <div class="education-marker">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <div class="education-card">
+                    <span class="education-number">02 / JUNIOR HIGH SCHOOL</span>
+                    <h3>SMP</h3>
+                    <p class="education-place">SMP Negeri 14 Pontianak</p>
+                    <span class="education-status">SMP</span>
+                </div>
+            </article>
+
+            <article class="education-item">
+                <div class="education-marker">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <div class="education-card">
+                    <span class="education-number">03 / VOCATIONAL HIGH SCHOOL</span>
+                    <h3>SMK</h3>
+                    <p class="education-place">SMK Negeri 7 Pontianak</p>
+                    <p class="education-major">
+                        Teknik Jaringan Komputer dan Telekomunikasi (TJKT)
+                    </p>
+                    <span class="education-status">SMK / TJKT</span>
+                </div>
+            </article>
+
+            <article class="education-item">
+                <div class="education-marker">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="education-card education-current">
+                    <span class="education-number">04 / UNIVERSITY</span>
+                    <h3>Universitas Tanjungpura</h3>
+                    <p class="education-place">Pontianak, Kalimantan Barat</p>
+                    <p class="education-major">S1 Sistem Informasi</p>
+                    <span class="education-status">CURRENTLY STUDYING</span>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+
+
+        <!-- INTERESTS / HOBI -->
+        
+<!-- INTERESTS / HOBI -->
+        <div class="gi-divider" aria-hidden="true"><span class="gi-line"></span><svg class="gi-emblem" viewBox="0 0 120 40"><use href="#gi-center"/></svg><span class="gi-line flip"></span><span class="gi-label">III · Interests</span></div>
+        <section class="hobbies" id="hobbies">
+            <div class="section-container" data-aos="fade-up">
+                <p class="section-label">BEYOND THE SCREEN</p>
+                <h2>My <span>Interests</span></h2>
+                <p class="section-description">
+                    Dua dunia yang gua suka: mengabadikan keindahan langit malam
+                    dan menikmati persaingan di Land of Dawn.
+                </p>
+
+                <!-- ASTROPHOTOGRAPHY -->
+               
+            <div class="astro-gallery">
+                <div class="astro-gallery-header">
+                    <div>
+                        <p class="section-label">CAPTURED BY GuideFs</p>
+                        <h3>Astro<span>photography</span></h3>
+                        <p>Moments beneath the night sky.</p>
+                    </div>
+
+                    <div class="astro-controls">
+                        <button class="astro-arrow" id="astro-prev" aria-label="Foto sebelumnya">
+                            &#8592;
+                        </button>
+                        <button class="astro-arrow" id="astro-next" aria-label="Foto berikutnya">
+                            &#8594;
+                        </button>
+                    </div>
+                </div>
+
+                <div class="astro-track" id="astro-track">
+                    <div class="astro-card">
+                        <img src="Photo/WhatsApp Image 2026-10-26 at 12.57.00 (2).jpeg" alt="Astrophotography 1" loading="lazy" decoding="async">
+                        <span>01 / MILKYWAY</span>
+                    </div>
+                    <div class="astro-card">
+                        <img src="Photo/WhatsApp Image 2026-10-26 at 12.57.00.jpeg" alt="Astrophotography 2" loading="lazy" decoding="async">
+                        <span>02 / NIGHT SKY</span>
+                    </div>
+                    <div class="astro-card">
+                        <img src="Photo/WhatsApp Image 2026-10-26 at 12.56.59 (1).jpeg" alt="Astrophotography 3" loading="lazy" decoding="async">
+                        <span>03 / NIGHT SKY</span>
+                    </div>
+                    <div class="astro-card">
+                        <img src="Photo/WhatsApp Image 2026-10-26 at 12.57.00 (1).jpeg" alt="Astrophotography 4" loading="lazy" decoding="async">
+                        <span>04 / NIGHT SKY</span>
+                    </div>
+                    <div class="astro-card">
+                        <img src="Photo/WhatsApp Image 2026-10-26 at 13.02.52.jpeg" alt="Astrophotography 5" loading="lazy" decoding="async">
+                        <span>05 / NIGHT SKY</span>
+                    </div>
+                    <div class="astro-card">
+                        <img src="Photo/WhatsApp Image 2026-10-26 at 12.56.59.jpeg" alt="Astrophotography 6" loading="lazy" decoding="async">
+                        <span>JAN DIBACA MAH</span>
+                    </div>
+                </div>
+
+                <p class="astro-hint">← Geser untuk melihat foto lainnya →</p>
+            </div>
+
+
+
+<div class="ml-gallery">
+    <div class="astro-gallery-header">
+        <div>
+            <p class="section-label">EMEL</p>
+            <h3>Mobile <span>Legends</span></h3>
+            <p>My journey on the Land of Dawn.</p>
+        </div>
+
+        <div class="astro-controls">
+            <button class="astro-arrow" id="ml-prev" aria-label="Foto sebelumnya">
+                &#8592;
+            </button>
+            <button class="astro-arrow" id="ml-next" aria-label="Foto berikutnya">
+                &#8594;
+            </button>
+        </div>
+    </div>
+
+    <div class="astro-track" id="ml-track">
+        <div class="astro-card">
+            <img src="Photo/imo.jpeg" alt="Mobile Legends 1" loading="lazy" decoding="async">
+            <span>IMO hanyalah angka</span>
+        </div>
+        <div class="astro-card">
+            <img src="Photo/friend imo.jpeg" alt="Mobile Legends 2" loading="lazy" decoding="async">
+            <span>TIM RENDI GANTENG</span>
+        </div>
+        <div class="astro-card">
+            <img src="Photo/friend imo2.jpeg" alt="Mobile Legends 3" loading="lazy" decoding="async">
+            <span>CLASSMEET ERA</span>
+        </div>
+        <div class="astro-card">
+            <img src="Photo/fnny.jpeg" alt="Mobile Legends 4" loading="lazy" decoding="async">
+            <span>FANNY BUNTAU</span>
+        </div>
+    </div>
+
+    <p class="astro-hint">← Geser untuk melihat foto lainnya →</p>
+</div>
+</div>
+</section>
+
+
+        <div class="gi-divider" aria-hidden="true"><span class="gi-line"></span><svg class="gi-emblem" viewBox="0 0 120 40"><use href="#gi-center"/></svg><span class="gi-line flip"></span><span class="gi-label">IV · Portfolio</span></div>
+
+        <!-- PORTFOLIO / PRESTASI -->
+       
+<!-- PORTFOLIO / PRESTASI -->
+        <section class="portfolio" id="portfolio">
+            <div class="section-container" data-aos="fade-up">
+                <p class="section-label">MILESTONES & ACHIEVEMENTS</p>
+                <h2>Portfolio <span>Showcase</span></h2>
+                <p class="section-description">
+                    Explore my journey through certifications, technical expertise, and projects.
+                </p>
+
+                <!-- TAB SWITCHER (EKIZR STYLE - PROJECTS DI AKHIR) -->
+                <div class="portfolio-tabs" role="tablist" data-aos="fade-up" data-aos-delay="100">
+                    <button class="portfolio-tab-btn active" data-tab="certificates" type="button">
+                        <i class="fa-solid fa-award"></i> Certificates
+                    </button>
+                    <button class="portfolio-tab-btn" data-tab="tech-stack" type="button">
+                        <i class="fa-solid fa-layer-group"></i> Tech Stack
+                    </button>
+                    <button class="portfolio-tab-btn" data-tab="projects" type="button">
+                        <i class="fa-solid fa-code"></i> Projects
+                    </button>
+                </div>
+
+                <!-- TAB 1: CERTIFICATES (AKTIF DENGAN 3 KARTU SERTIFIKAT ASLI) -->
+                <div class="portfolio-tab-content active" id="tab-certificates">
+                    <div class="portfolio-grid">
+                        <!-- PENGHARGAAN TINGKAT KOTA -->
+                        <article class="portfolio-card achievement-card" data-aos="fade-up">
+                            <div class="achievement-image">
+                                <img src="Photo/WhatsApp Image 2026-10-26 at 12.36.44.jpeg"
+                                    alt="Penghargaan mengetik 10 jari tingkat kota"
+                                    loading="lazy" decoding="async">
+                                <span class="achievement-level">CITY LEVEL</span>
+                            </div>
+
+                            <div class="achievement-info">
+                                <span class="portfolio-number">ACHIEVEMENT / 01</span>
+                                <h3>Mengetik 10 Jari</h3>
+                                <p>Pencapaian keterampilan mengetik 10 jari tingkat kota di HOPE TeDe.</p>
+                                <span class="portfolio-tag">Tingkat Kota</span>
+                            </div>
+                        </article>
+
+                        <!-- PENGHARGAAN TINGKAT NASIONAL -->
+                        <article class="portfolio-card achievement-card" data-aos="fade-up" data-aos-delay="150">
+                            <div class="achievement-image">
+                                <img src="Photo/WhatsApp Image 2026-10-26 at 12.36.43.jpeg"
+                                    alt="Penghargaan mengetik 10 jari tingkat nasional"
+                                    loading="lazy" decoding="async">
+                                <span class="achievement-level">NATIONAL LEVEL</span>
+                            </div>
+
+                            <div class="achievement-info">
+                                <span class="portfolio-number">ACHIEVEMENT / 02</span>
+                                <h3>Mengetik 10 Jari</h3>
+                                <p>Pencapaian keterampilan mengetik 10 jari tingkat nasional di HOPE TeDe.</p>
+                                <span class="portfolio-tag">Tingkat Nasional</span>
+                            </div>
+                        </article>
+
+                        <!-- PRESTASI CLASSMEET -->
+                        <article class="portfolio-card achievement-card" data-aos="fade-up" data-aos-delay="300">
+                            <div class="achievement-image">
+                                <img src="Photo/classmeet.jpeg"
+                                    alt="Prestasi juara classmeet"
+                                    class="classmeet-photo"
+                                    loading="lazy" decoding="async"
+                                    role="button"
+                                    tabindex="0"
+                                    aria-label="Perbesar foto prestasi classmeet">
+                                <span class="achievement-level">CLASSMEET</span>
+                            </div>
+
+                            <div class="achievement-info">
+                                <span class="portfolio-number">ACHIEVEMENT / 03</span>
+                                <h3>Juara Classmeet</h3>
+                                <p>Prestasi dalam kompetisi classmeet di sekolah.</p>
+                                <span class="portfolio-tag">Juara Classmeet</span>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <!-- TAB 2: TECH STACK (HTML5, CSS3, JAVASCRIPT) -->
+                <div class="portfolio-tab-content" id="tab-tech-stack">
+                    <div class="tech-stack-grid">
+                        <!-- HTML5 -->
+                        <article class="tech-stack-card" data-aos="fade-up">
+                            <div class="tech-card-header">
+                                <div class="tech-icon-box html-box">
+                                    <i class="fa-brands fa-html5"></i>
+                                </div>
+                                <div>
+                                    <h3>HTML5</h3>
+                                    <span class="tech-category">Markup Language</span>
+                                </div>
+                            </div>
+                            <p>Struktur markup semantik web modern, standar W3C, performa SEO, dan fondasi halaman web yang terstruktur.</p>
+                            <div class="tech-card-footer">
+                                <span><i class="fa-solid fa-code"></i> Semantik</span>
+                                <span><i class="fa-solid fa-universal-access"></i> Accessibility</span>
+                                <span><i class="fa-solid fa-bolt"></i> Fast Render</span>
+                            </div>
+                        </article>
+
+                        <!-- CSS3 -->
+                        <article class="tech-stack-card" data-aos="fade-up" data-aos-delay="150">
+                            <div class="tech-card-header">
+                                <div class="tech-icon-box css-box">
+                                    <i class="fa-brands fa-css3-alt"></i>
+                                </div>
+                                <div>
+                                    <h3>CSS3</h3>
+                                    <span class="tech-category">Stylesheet & Styling</span>
+                                </div>
+                            </div>
+                            <p>Desain responsif modern, Flexbox, CSS Grid, animasi UI, Glassmorphic styling, dan sistem tema dinamis.</p>
+                            <div class="tech-card-footer">
+                                <span><i class="fa-solid fa-palette"></i> Glassmorphism</span>
+                                <span><i class="fa-solid fa-mobile-screen"></i> Responsive</span>
+                                <span><i class="fa-solid fa-wand-magic-sparkles"></i> Animations</span>
+                            </div>
+                        </article>
+
+                        <!-- JAVASCRIPT -->
+                        <article class="tech-stack-card" data-aos="fade-up" data-aos-delay="300">
+                            <div class="tech-card-header">
+                                <div class="tech-icon-box js-box">
+                                    <i class="fa-brands fa-js"></i>
+                                </div>
+                                <div>
+                                    <h3>JavaScript</h3>
+                                    <span class="tech-category">Programming Language</span>
+                                </div>
+                            </div>
+                            <p>ES6+ Scripting, manipulasi DOM interaktif, event handling, Canvas HTML5, dan logika theme switching.</p>
+                            <div class="tech-card-footer">
+                                <span><i class="fa-solid fa-gear"></i> ES6+ Core</span>
+                                <span><i class="fa-solid fa-sliders"></i> DOM Manipulation</span>
+                                <span><i class="fa-solid fa-sparkles"></i> Dynamic UI</span>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <!-- TAB 3: PROJECTS (DI AKHIR SESUAI PERMINTAAN USER) -->
+                <div class="portfolio-tab-content" id="tab-projects">
+                    <div class="empty-showcase-card" data-aos="fade-up">
+                        <div class="empty-icon">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+                        <h3>Belum Ada Proyek</h3>
+                        <p>Proyek-proyek mendatang sedang dalam proses pengembangan dan akan segera ditampilkan di sini.</p>
+                        <div class="empty-badge">
+                            <i class="fa-solid fa-clock"></i> Coming Soon
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <div class="gi-divider" aria-hidden="true"><span class="gi-line"></span><svg class="gi-emblem" viewBox="0 0 120 40"><use href="#gi-center"/></svg><span class="gi-line flip"></span><span class="gi-label">V · Contact</span></div>
+
+        <!-- CONTACT -->
+        <section class="contact" id="contact">
+            <div class="contact-container" data-aos="fade-up">
+                <p class="section-label">GET IN TOUCH</p>
+                <h2>Contact <span>Me</span></h2>
+
+                <p class="section-description">
+                    Punya pertanyaan, ingin berdiskusi, atau sekadar menyapa?
+                    Hubungi gua melalui media sosial atau email.
+                </p>
+
+                <div class="contact-list">
+                    <a class="contact-item"
+                       href="https://instagram.com/ptraaz_pri"
+                       target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-instagram"></i>
+                        <span>
+                            <small>Instagram</small>
+                            <strong>@ptraaz_pri</strong>
+                        </span>
+                    </a>
+
+                    <a class="contact-item"
+                       href="https://tiktok.com/@langitguid"
+                       target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-tiktok"></i>
+                        <span>
+                            <small>TikTok</small>
+                            <strong>@langit.guid</strong>
+                        </span>
+                    </a>
+
+                    <a class="contact-item"
+                       href="mailto:putraazpriramansyah@gmail.com">
+                        <i class="fas fa-envelope"></i>
+                        <span>
+                            <small>Email</small>
+                            <strong>putraazpriramansyah@gmail.com</strong>
+                        </span>
+                    </a>
+
+                    <!-- Isi nomor WhatsApp lu nanti -->
+                    <a class="contact-item" href="https://wa.me/6289516280483" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>
+                            <small>WhatsApp</small>
+                            <strong>+62895-1628-0483</strong>
+                        </span>
+                    </a>
+                </div>
+
+<!-- GUESTBOOK -->
+<div class="guestbook" data-aos="fade-up">
+
+    <div class="guestbook-heading">
+        <p class="section-label">GUESTBOOK</p>
+        <h3>Leave a <span>Message</span></h3>
+        <p>
+            Tinggalkan pesan, kesan, atau sekadar sapaan
+            untuk pengunjung lainnya.
+        </p>
+    </div>
+
+    <form id="guestbook-form" class="guestbook-form">
+
+        <div class="guestbook-input">
+            <label for="guestbook-name">Nama</label>
+            <input
+                type="text"
+                id="guestbook-name"
+                placeholder="Masukkan nama kamu"
+                maxlength="30"
+                required
+            >
+        </div>
+
+        <div class="guestbook-input">
+            <label for="guestbook-message">Pesan</label>
+            <textarea
+                id="guestbook-message"
+                placeholder="Tuliskan pesan kamu..."
+                maxlength="500"
+                rows="4"
+                required
+            ></textarea>
+        </div>
+
+        <button type="submit" id="guestbook-submit">
+            <i class="fas fa-paper-plane"></i>
+            Kirim Pesan
+        </button>
+
+        <p id="guestbook-status" aria-live="polite"></p>
+
+    </form>
+
+    <div class="guestbook-comments">
+
+        <div class="guestbook-comments-heading">
+            <h4>Visitor Messages</h4>
+            <span id="guestbook-count">0 pesan</span>
+        </div>
+
+        <div id="guestbook-list">
+            <p class="guestbook-empty">Memuat pesan...</p>
+        </div>
+
+    </div>
+
+</div>                
+
+                <p class="contact-footer">
+                    © <span id="contact-year">2026</span> Azpri. All rights reserved.
+                </p>
+            </div>
+        </section>
+    </main>
+
+<!-- GUIDEFs MUSIC PLAYER -->
+<div class="music-island" id="music-island">
+    <button class="music-trigger" id="music-trigger"
+            aria-expanded="false" aria-label="Buka music player">
+        <span class="music-disc">
+            <i class="fas fa-music"></i>
+        </span>
+        <span class="music-trigger-text">
+            <strong>GUIDEFs</strong>
+            <small id="mini-status">MUSIC PLAYER</small>
+        </span>
+        <i class="fas fa-chevron-down music-chevron"></i>
+    </button>
+
+    <div class="music-panel" id="music-panel" hidden>
+        <div class="music-panel-heading">
+            <div>
+                <span class="music-eyebrow">GUIDEFs / AUDIO SYSTEM</span>
+                <h3>Music <span>Player</span></h3>
+            </div>
+            <button id="music-close" class="music-close"
+                    aria-label="Tutup music player">
+                <i class="fas fa-xmark"></i>
+            </button>
+        </div>
+
+        <form class="music-search" id="music-search">
+            <i class="fas fa-magnifying-glass"></i>
+            <input id="music-query" type="search"
+                   placeholder="Cari lagu atau artis..."
+                   aria-label="Cari lagu" required>
+            <button type="submit" aria-label="Cari">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </form>
+
+        <p class="music-message" id="music-message">
+            Cari lagu favorit lu.
+        </p>
+
+        <div class="music-results" id="music-results"></div>
+
+        <div class="music-now">
+            <div class="music-art">
+                <i class="fas fa-compact-disc"></i>
+            </div>
+            <div class="music-track-info">
+                <small>NOW PLAYING</small>
+                <strong id="music-title">Belum ada lagu</strong>
+                <span id="music-artist">Pilih lagu untuk memulai</span>
+            </div>
+            <button class="music-control" id="music-play"
+                    aria-label="Putar atau jeda">
+                <i class="fas fa-play" id="music-play-icon"></i>
+            </button>
+        </div>
+
+        <div class="music-progress">
+            <span id="music-current">0:00</span>
+            <input id="music-seek" type="range" min="0"
+                   max="100" value="0" aria-label="Posisi lagu">
+            <span id="music-duration">0:00</span>
+        </div>
+
+        <div class="music-bottom">
+            <span><i class="fab fa-youtube"></i> YouTube Player</span>
+            <label>
+                <i class="fas fa-volume-high"></i>
+                <input id="music-volume" type="range" min="0"
+                       max="100" value="70" aria-label="Volume">
+            </label>
+        </div>
+
+        <!-- Pemutar resmi YouTube -->
+        <div class="youtube-player-wrap">
+            <div id="youtube-player"></div>
+        </div>
+    </div>
+</div>
+
+    <!-- PARTISI SHORTCUT -->
+<a href="partisi.html" class="partisi-shortcut">
+    <i class="fa-solid fa-book-open"></i>
+    <span>RANGKUMAN PARTISI</span>
+</a>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- SUPABASE -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js?v=12"></script>
+    <script src="theme.js?v=12" defer></script>
+    <script src="music.js?v=12" defer></script>
+    <script src="fx.js?v=12" defer></script>
+    <script src="sfx.js?v=12" defer></script>
+    <script src="blackhole.js?v=12" defer></script>
+    <script src="celestial.js?v=12" defer></script>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Partisi | GuideFs</title>
+    <meta name="description" content="Rangkuman materi Partisi 1 &amp; 2: HMSI, ruang lingkup Sistem Informasi, public speaking, dan Kompas Jiwa.">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23050d17'/%3E%3Cpath d='M32 9l5.2 18.8L56 32l-18.8 5.2L32 56l-5.2-18.8L8 32l18.8-5.2z' fill='%23d7c69b'/%3E%3C/svg%3E">
+
+    <script>try{var t=localStorage.getItem("gf-theme")||"night";document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme="night"}</script>
+    <link rel="stylesheet" href="style.css?v=12">
+    <link rel="stylesheet" href="theme.css?v=12">
+    <link rel="stylesheet" href="partisi.css?v=12">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <noscript><style>#partisi-loader{display:none!important}body.partisi-page{opacity:1!important}</style></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="partisi-page">
+
+    <!-- Ornamen emas (dipakai pembatas & loader) -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="gi-center" viewBox="0 0 120 40"><g fill="currentColor"><path d="M60 3 L63.4 16.6 L77 20 L63.4 23.4 L60 37 L56.6 23.4 L43 20 L56.6 16.6Z"/><path d="M42 20 C37 14.5 31 12.5 21 13.5 C27 15.8 29.5 18 30.5 20 C29.5 22 27 24.2 21 26.5 C31 27.5 37 25.5 42 20Z" opacity=".9"/><path d="M78 20 C83 14.5 89 12.5 99 13.5 C93 15.8 90.5 18 89.5 20 C90.5 22 93 24.2 99 26.5 C89 27.5 83 25.5 78 20Z" opacity=".9"/><circle cx="14" cy="20" r="2"/><circle cx="106" cy="20" r="2"/></g><g fill="none" stroke="currentColor" stroke-width="1"><path d="M60 9 L71 20 L60 31 L49 20Z" opacity=".75"/><path d="M7 20H3M117 20H113" opacity=".6"/></g></symbol></defs></svg>
+
+    <!-- ATMOSPHERE SKY -->
+    <div class="sky" aria-hidden="true"><div class="sky-layer sky-light"></div><div class="sky-layer sky-sunset"><i class="sun"></i></div><div class="sky-clouds"></div><canvas id="sky-night"></canvas></div>
+
+    <!-- LOADER (V4.5): emblem emas + judul + bar tipis -->
+    <div id="partisi-loader" role="status" aria-live="polite" aria-label="Memuat rangkuman partisi">
+        <div class="pl-glow" aria-hidden="true"></div>
+        <div class="pl-card">
+            <svg class="pl-emblem" viewBox="0 0 120 40" aria-hidden="true"><use href="#gi-center"/></svg>
+            <p class="pl-kicker">CATATAN MATERI</p>
+            <h1 class="pl-title">Rangkuman Partisi</h1>
+            <div class="pl-bar" aria-hidden="true"><i class="pl-fill" id="pl-fill"></i></div>
+            <p class="pl-meta"><span id="loader-status">Memuat materi pembelajaran...</span><b id="loader-percent">0%</b></p>
+        </div>
+    </div>
+
+    <!-- NAVBAR (liquid glass) -->
+    <header class="partisi-navbar">
+        <a href="index.html" class="partisi-logo">Hello i'm <span>Azpri</span></a>
+
+        <div class="partisi-nav-right">
+            <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Ganti mode"><span class="theme-symbol" aria-hidden="true">☾</span></button>
+
+            <a href="index.html" class="partisi-back">
+                <i class="fa-solid fa-arrow-left"></i>
+                Kembali
+            </a>
+        </div>
+    </header>
+
+    <div class="scroll-progress" aria-hidden="true"><i></i></div>
+    <main class="partisi-container">
+
+        <div class="partisi-heading">
+            <span class="partisi-label">CATATAN MATERI</span>
+            <h1>Partisi 1 &amp; 2</h1>
+            <div class="gi-divider pt-orn" aria-hidden="true"><span class="gi-line"></span><svg class="gi-emblem" viewBox="0 0 120 40"><use href="#gi-center"/></svg><span class="gi-line flip"></span></div>
+            <p class="pt-sub">Rangkuman materi pembelajaran</p>
+        </div>
+
+        <article class="partisi-content" id="partisi-content">
+
+            <!-- ============================ PARTISI 1 ============================ -->
+            <section class="partisi-section" data-partisi="1" data-roman="I" data-icon="fa-sitemap" data-title="Pengenalan Organisasi &amp; Keilmuan Sistem Informasi">
+                <h2 class="pt-title">Pengenalan Organisasi &amp; Keilmuan Sistem Informasi</h2>
+
+                <!-- MATERI 1 -->
+                <div class="materi" data-materi="1">
+                    <header class="materi-head">
+                        <span class="materi-no">Materi 1</span>
+                        <h3>Mengenal HMSI dan Peran Mahasiswa dalam Organisasi</h3>
+                        <p class="speaker"><i class="fa-solid fa-microphone-lines" aria-hidden="true"></i><span>Narasumber:</span> <b>Nabil Nur Fauzan &amp; Syukri</b></p>
+                    </header>
+
+                    <p>Himpunan Mahasiswa Sistem Informasi (HMSI) merupakan organisasi yang menjadi bagian dari kehidupan mahasiswa Sistem Informasi. Sejak didirikan pada 23 Juli 2016, HMSI berperan sebagai tempat bagi mahasiswa untuk mengenal lingkungan organisasi, membangun hubungan antarmahasiswa, serta memperoleh pengalaman yang tidak selalu didapatkan melalui kegiatan akademik.</p>
+
+                    <p>Keberadaan HMSI memberikan kesempatan bagi mahasiswa untuk terlibat dalam berbagai aktivitas dan menyampaikan aspirasi yang berkaitan dengan kehidupan perkuliahan. Organisasi ini juga menjadi penghubung antara mahasiswa dengan pihak program studi sehingga komunikasi dan penyampaian kebutuhan dapat berjalan lebih baik.</p>
+
+                    <p class="pt-lead-in">Dalam menjalankan kegiatannya, HMSI berfokus pada beberapa hal:</p>
+                    <ul class="feature-grid">
+                        <li><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i><strong>Pengembangan Mahasiswa</strong><span>Memberikan ruang untuk meningkatkan kemampuan diri melalui kegiatan pelatihan, seminar, dan aktivitas organisasi.</span></li>
+                        <li><i class="fa-solid fa-bullhorn" aria-hidden="true"></i><strong>Penyaluran Aspirasi</strong><span>Menjadi tempat bagi mahasiswa untuk menyampaikan pendapat, masukan, serta kebutuhan yang berkaitan dengan lingkungan perkuliahan.</span></li>
+                        <li><i class="fa-solid fa-handshake" aria-hidden="true"></i><strong>Hubungan dan Kebersamaan</strong><span>Membangun hubungan yang baik antarmahasiswa serta menciptakan lingkungan yang saling mendukung.</span></li>
+                        <li><i class="fa-solid fa-trophy" aria-hidden="true"></i><strong>Informasi dan Kesempatan</strong><span>Membagikan informasi mengenai kegiatan serta kompetisi di berbagai tingkatan agar mahasiswa dapat memperoleh pengalaman dan mengembangkan kemampuannya.</span></li>
+                    </ul>
+
+                    <p>HMSI juga memiliki arah pengembangan yang berlandaskan pada nilai inovatif dan adaptif. Mahasiswa diharapkan tidak hanya mampu menghasilkan gagasan baru, tetapi juga memiliki kesiapan dalam menghadapi perubahan, khususnya perkembangan teknologi informasi yang terus berlangsung.</p>
+
+                    <aside class="intisari"><span>Intisari</span><p>HMSI menjadi ruang bagi mahasiswa Sistem Informasi untuk berkembang, menyampaikan aspirasi, dan membangun kebersamaan, dengan arah pengembangan yang inovatif dan adaptif.</p></aside>
+                </div>
+
+                <!-- MATERI 2 -->
+                <div class="materi" data-materi="2">
+                    <header class="materi-head">
+                        <span class="materi-no">Materi 2</span>
+                        <h3>Memahami Ruang Lingkup Sistem Informasi</h3>
+                        <p class="speaker"><i class="fa-solid fa-microphone-lines" aria-hidden="true"></i><span>Narasumber:</span> <b>Devi Gusmita, S.Kom., M.Kom.</b></p>
+                    </header>
+
+                    <p>Sistem Informasi merupakan bidang keilmuan yang tidak hanya mempelajari komputer atau pemrograman. Di dalamnya terdapat keterkaitan antara teknologi, pengelolaan organisasi, dan kebutuhan bisnis. Perpaduan ketiganya memungkinkan suatu permasalahan diselesaikan melalui pemanfaatan informasi dan teknologi yang tepat.</p>
+
+                    <p class="pt-lead-in">Ketiga aspek tersebut memiliki fungsi yang berbeda:</p>
+                    <ul class="feature-grid cols-3">
+                        <li><i class="fa-solid fa-microchip" aria-hidden="true"></i><strong>Teknologi</strong><span>Berhubungan dengan perangkat keras, perangkat lunak, jaringan, serta berbagai sarana untuk mengelola data.</span></li>
+                        <li><i class="fa-solid fa-diagram-project" aria-hidden="true"></i><strong>Manajemen</strong><span>Berkaitan dengan bagaimana sumber daya dan aktivitas dalam organisasi diatur agar tujuan dapat tercapai.</span></li>
+                        <li><i class="fa-solid fa-briefcase" aria-hidden="true"></i><strong>Bisnis</strong><span>Berfokus pada kebutuhan, proses, dan permasalahan yang dihadapi suatu organisasi atau perusahaan.</span></li>
+                    </ul>
+
+                    <p>Dalam penerapannya, seorang mahasiswa Sistem Informasi perlu memahami hubungan antara kebutuhan pengguna dengan solusi teknologi. Sebuah sistem tidak cukup hanya dapat dijalankan secara teknis, tetapi juga harus memberikan manfaat dan sesuai dengan tujuan penggunaannya.</p>
+
+                    <div class="callout">
+                        <h4><i class="fa-solid fa-comments" aria-hidden="true"></i>Etika Komunikasi dalam Dunia Akademik</h4>
+                        <p>Kehidupan perkuliahan juga membutuhkan kemampuan berkomunikasi secara tepat. Ketika berinteraksi dengan dosen, staf, maupun sesama mahasiswa, penting untuk memperhatikan pilihan kata, kesopanan, dan cara menyampaikan maksud.</p>
+                        <p>Komunikasi sebaiknya dilakukan secara jelas, tidak bertele-tele, serta tetap menghargai orang yang diajak berbicara. Waktu menghubungi seseorang juga perlu diperhatikan. Mengirim pesan pada waktu kerja atau waktu yang wajar merupakan salah satu bentuk sikap profesional dan penghargaan terhadap waktu orang lain.</p>
+                        <p>Kebiasaan tersebut menjadi bagian dari pembentukan sikap mahasiswa yang nantinya berguna ketika berinteraksi di lingkungan profesional.</p>
+                    </div>
+
+                    <aside class="intisari"><span>Intisari</span><p>Sistem Informasi memadukan teknologi, manajemen, dan bisnis. Sebuah sistem harus berjalan secara teknis sekaligus bermanfaat bagi penggunanya, dan komunikasi akademik yang jelas, sopan, serta tepat waktu mencerminkan sikap profesional.</p></aside>
+                </div>
+            </section>
+
+            <!-- ============================ PARTISI 2 ============================ -->
+            <section class="partisi-section" data-partisi="2" data-roman="II" data-icon="fa-microphone-lines" data-title="Keterampilan Komunikasi &amp; Pengembangan Diri">
+                <h2 class="pt-title">Keterampilan Komunikasi &amp; Pengembangan Diri</h2>
+
+                <!-- MATERI 1 -->
+                <div class="materi" data-materi="1">
+                    <header class="materi-head">
+                        <span class="materi-no">Materi 1</span>
+                        <h3>Membangun Kemampuan Public Speaking</h3>
+                        <p class="speaker"><i class="fa-solid fa-microphone-lines" aria-hidden="true"></i><span>Narasumber:</span> <b>Irwansyah</b></p>
+                    </header>
+
+                    <p>Public speaking merupakan kemampuan menyampaikan gagasan atau informasi secara lisan kepada orang lain dengan cara yang dapat dipahami oleh pendengar. Bagi mahasiswa, keterampilan ini memiliki peran penting karena hampir setiap kegiatan akademik maupun organisasi membutuhkan komunikasi yang baik.</p>
+
+                    <p>Contohnya dapat ditemukan ketika mempresentasikan tugas, menyampaikan pendapat dalam diskusi, mengikuti kegiatan seminar, hingga menghadapi wawancara.</p>
+
+                    <p class="pt-lead-in">Agar penyampaian pesan dapat berlangsung dengan efektif, terdapat beberapa aspek yang perlu diperhatikan:</p>
+                    <ol class="step-path">
+                        <li><i class="fa-solid fa-shirt" aria-hidden="true"></i><strong>Kerapian Penampilan</strong><span>Penampilan menjadi salah satu unsur yang memengaruhi kesan awal audiens terhadap pembicara. Menyesuaikan pakaian dengan situasi dan menjaga kerapian dapat menunjukkan kesiapan serta keseriusan ketika menyampaikan sesuatu.</span></li>
+                        <li><i class="fa-solid fa-comment-dots" aria-hidden="true"></i><strong>Kejelasan dalam Berbahasa</strong><span>Pembicaraan perlu disampaikan menggunakan susunan kalimat yang mudah diikuti. Pemilihan kata yang tepat dan penyampaian yang terarah membantu menghindari kesalahpahaman antara pembicara dan pendengar.</span></li>
+                        <li><i class="fa-solid fa-eye" aria-hidden="true"></i><strong>Interaksi melalui Kontak Mata</strong><span>Kontak mata merupakan salah satu cara membangun interaksi dengan audiens. Dengan tidak hanya terpaku pada satu arah, pembicara dapat menciptakan suasana komunikasi yang lebih terbuka dan membuat pendengar merasa diperhatikan.</span></li>
+                        <li><i class="fa-solid fa-hands" aria-hidden="true"></i><strong>Penggunaan Bahasa Tubuh</strong><span>Komunikasi tidak hanya bergantung pada kata-kata. Gerakan tangan, ekspresi wajah, serta posisi tubuh turut membantu menyampaikan maksud pembicaraan. Penggunaan gesture yang sesuai dapat membuat penyampaian lebih hidup dan mudah dipahami.</span></li>
+                    </ol>
+
+                    <p>Keempat aspek tersebut perlu diperhatikan secara bersamaan. Kemampuan berbicara di depan umum juga dapat terus dikembangkan melalui latihan dan pengalaman dalam berbagai kesempatan.</p>
+
+                    <aside class="intisari"><span>Intisari</span><p>Penampilan, kejelasan bahasa, kontak mata, dan bahasa tubuh perlu diperhatikan secara bersamaan, lalu terus diasah lewat latihan dan pengalaman.</p></aside>
+                </div>
+
+                <!-- MATERI 2 -->
+                <div class="materi" data-materi="2">
+                    <header class="materi-head">
+                        <span class="materi-no">Materi 2</span>
+                        <h3>Kesehatan Psikologis dan Pemahaman Diri</h3>
+                        <p class="speaker"><i class="fa-solid fa-microphone-lines" aria-hidden="true"></i><span>Narasumber:</span> <b>Fitri</b></p>
+                    </header>
+
+                    <p>Memasuki perguruan tinggi merupakan perubahan besar dalam kehidupan seorang mahasiswa. Perbedaan pola belajar, lingkungan sosial, dan tanggung jawab membuat mahasiswa perlu menyesuaikan diri dengan kebiasaan baru.</p>
+
+                    <p>Tidak seperti masa sekolah, kehidupan perkuliahan menuntut mahasiswa untuk lebih aktif mencari informasi, mengatur jadwal secara mandiri, dan menyelesaikan tanggung jawab akademik. Proses penyesuaian ini terkadang menimbulkan tekanan, baik karena tugas, lingkungan baru, maupun harapan yang diberikan oleh diri sendiri dan orang lain.</p>
+
+                    <p>Oleh sebab itu, memahami kondisi psikologis dan mengenali diri sendiri menjadi hal yang penting agar mahasiswa dapat menjalani proses perkuliahan dengan lebih baik.</p>
+
+                    <div class="callout callout-compass">
+                        <h4><i class="fa-solid fa-compass" aria-hidden="true"></i>Kompas Jiwa sebagai Sarana Mengenal Diri</h4>
+                        <p>Kompas Jiwa merupakan pendekatan refleksi diri yang membantu seseorang melihat perjalanan hidup, mengenali kemampuan, serta memahami hal-hal yang ingin dikembangkan. Terdapat lima bagian yang dapat digunakan sebagai bahan refleksi:</p>
+                    </div>
+                    <ol class="step-path path-compass">
+                        <li><i class="fa-solid fa-signs-post" aria-hidden="true"></i><strong>Titik Balik</strong><span>Mengidentifikasi pengalaman atau kejadian yang memberikan pengaruh besar terhadap kehidupan. Pengalaman tersebut dapat menjadi pelajaran yang membentuk pola pikir dan cara seseorang mengambil keputusan.</span></li>
+                        <li><i class="fa-solid fa-box-open" aria-hidden="true"></i><strong>Modal Awal</strong><span>Mengenali berbagai bekal yang telah dimiliki untuk menghadapi kehidupan, seperti pengetahuan, keterampilan, pengalaman, serta dukungan dari lingkungan sekitar.</span></li>
+                        <li><i class="fa-solid fa-seedling" aria-hidden="true"></i><strong>Celah Pertumbuhan</strong><span>Menyadari bagian diri yang masih membutuhkan perhatian dan pengembangan. Hal ini dapat berupa kemampuan yang belum dikuasai atau kebiasaan yang perlu diperbaiki.</span></li>
+                        <li><i class="fa-solid fa-star" aria-hidden="true"></i><strong>Potensi Diri</strong><span>Menggali kemampuan, kelebihan, dan bakat yang dapat menjadi kekuatan dalam menjalani berbagai aktivitas serta mencapai perkembangan pribadi.</span></li>
+                        <li><i class="fa-solid fa-compass" aria-hidden="true"></i><strong>Arah Hidup</strong><span>Menentukan gambaran mengenai masa depan, termasuk tujuan yang ingin dicapai dan hal-hal yang perlu dipersiapkan untuk mewujudkannya.</span></li>
+                    </ol>
+
+                    <p>Kelima bagian tersebut dapat dijadikan bahan untuk melakukan evaluasi diri secara lebih terarah. Dengan mengenali perjalanan, bekal, kekurangan, potensi, dan tujuan, seseorang dapat memiliki pemahaman yang lebih baik mengenai langkah yang ingin diambil.</p>
+
+                    <aside class="intisari"><span>Intisari</span><p>Memahami kondisi psikologis dan mengenal diri membantu mahasiswa menjalani perkuliahan dengan lebih baik. Lima bagian Kompas Jiwa menjadi bahan evaluasi diri yang terarah.</p></aside>
+                </div>
+            </section>
+
+        </article>
+
+        <footer class="partisi-footer">
+            <span>GuideFs.</span>
+            <span>Personal Learning Notes</span>
+        </footer>
+
+    </main>
+
+    <div class="music-island" id="music-island">
+    <button class="music-trigger" id="music-trigger"
+            aria-expanded="false" aria-label="Buka music player">
+        <span class="music-disc">
+            <i class="fas fa-music"></i>
+        </span>
+        <span class="music-trigger-text">
+            <strong>GUIDEFs</strong>
+            <small id="mini-status">MUSIC PLAYER</small>
+        </span>
+        <i class="fas fa-chevron-down music-chevron"></i>
+    </button>
+
+    <div class="music-panel" id="music-panel" hidden>
+        <div class="music-panel-heading">
+            <div>
+                <span class="music-eyebrow">GUIDEFs / AUDIO SYSTEM</span>
+                <h3>Music <span>Player</span></h3>
+            </div>
+            <button id="music-close" class="music-close"
+                    aria-label="Tutup music player">
+                <i class="fas fa-xmark"></i>
+            </button>
+        </div>
+
+        <form class="music-search" id="music-search">
+            <i class="fas fa-magnifying-glass"></i>
+            <input id="music-query" type="search"
+                   placeholder="Cari lagu atau artis..."
+                   aria-label="Cari lagu" required>
+            <button type="submit" aria-label="Cari">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </form>
+
+        <p class="music-message" id="music-message">
+            Cari lagu favorit lu.
+        </p>
+
+        <div class="music-results" id="music-results"></div>
+
+        <div class="music-now">
+            <div class="music-art">
+                <i class="fas fa-compact-disc"></i>
+            </div>
+            <div class="music-track-info">
+                <small>NOW PLAYING</small>
+                <strong id="music-title">Belum ada lagu</strong>
+                <span id="music-artist">Pilih lagu untuk memulai</span>
+            </div>
+            <button class="music-control" id="music-play"
+                    aria-label="Putar atau jeda">
+                <i class="fas fa-play" id="music-play-icon"></i>
+            </button>
+        </div>
+
+        <div class="music-progress">
+            <span id="music-current">0:00</span>
+            <input id="music-seek" type="range" min="0"
+                   max="100" value="0" aria-label="Posisi lagu">
+            <span id="music-duration">0:00</span>
+        </div>
+
+        <div class="music-bottom">
+            <span><i class="fab fa-youtube"></i> YouTube Player</span>
+            <label>
+                <i class="fas fa-volume-high"></i>
+                <input id="music-volume" type="range" min="0"
+                       max="100" value="70" aria-label="Volume">
+            </label>
+        </div>
+
+        <!-- Pemutar resmi YouTube -->
+        <div class="youtube-player-wrap">
+            <div id="youtube-player"></div>
+        </div>
+    </div>
+</div>
+
+    <script src="theme.js?v=12" defer></script>
+    <script src="music.js?v=12" defer></script>
+    <script src="fx.js?v=12" defer></script>
+    <script src="sfx.js?v=12" defer></script>
+    <script src="partisi.js?v=12"></script>
+</body>
+</html>
